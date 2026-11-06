@@ -1,0 +1,1189 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- GÓI TIẾNG VIỆT VÀ FONT TIMES NEW ROMAN ---
+\usepackage[utf8]{vietnam}
+\usepackage{mathptmx} % Font Times New Roman chuẩn trong LaTeX
+
+% --- CẤU HÌNH KHỔ GIẤY A4 VÀ CĂN LỀ ---
+\usepackage[a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+% --- TOÁN HỌC ---
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+% --- DANH SÁCH VÀ BẢNG BIỂU ---
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+% --- LIÊN KẾT VÀ ĐỊNH DẠNG ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% --- CẤU HÌNH MÔI TRƯỜNG ĐỊNH NGHĨA, VÍ DỤ ---
+\theoremstyle{definition}
+\newtheorem{dinhnghia}{Định nghĩa}[section]
+\newtheorem{vidu}{Ví dụ}[section]
+\newtheorem{chuy}{Chú ý}[section]
+\newtheorem{nhanxet}{Nhận xét}[section]
+\newtheorem{tinhchat}{Tính chất}[section]
+
+\begin{document}
+
+\begin{center}
+    {\large \textbf{PHẦN I. LÝ THUYẾT XÁC SUẤT}}\\[0.3em]
+    {\normalsize \textit{(Probability Theory)}}\\[1em]
+    {\LARGE \textbf{CHƯƠNG 1. XÁC SUẤT CỦA BIẾN CỐ}}
+\end{center}
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+\section{Biến cố ngẫu nhiên}
+
+\subsection{Hiện tượng ngẫu nhiên}
+Trong thế giới tự nhiên và đời sống xã hội, các hiện tượng xảy ra được chia thành hai loại:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Hiện tượng tất nhiên:} Là hiện tượng chắc chắn sẽ xảy ra (hoặc chắc chắn không xảy ra) khi một tổ hợp điều kiện xác định được thỏa mãn.
+    \item \textbf{Hiện tượng ngẫu nhiên:} Là hiện tượng khi thực hiện một tổ hợp điều kiện xác định, ta không thể dự đoán trước được kết quả cụ thể có xảy ra hay không.
+\end{itemize}
+\textit{Hiện tượng ngẫu nhiên chính là đối tượng khảo sát trung tâm của lý thuyết xác suất.}
+
+\subsection{Phép thử và Biến cố}
+\begin{enumerate}[label=\alph*), leftmargin=1.5em]
+    \item \textbf{Phép thử (Test / Experiment):} 
+    Là việc thực hiện quan sát, thí nghiệm, đo lường,... mà ta không thể dự đoán chắc chắn kết quả xảy ra.
+    
+    \item \textbf{Biến cố (Events):} 
+    Khi thực hiện một phép thử, ta có thể liệt kê tất cả các kết quả có thể xảy ra:
+    \begin{itemize}[leftmargin=1.5em]
+        \item Tập hợp tất cả các kết quả có thể xảy ra của một phép thử được gọi là \textbf{không gian mẫu} của phép thử đó, ký hiệu là $\Omega$.
+        \item Mỗi phần tử $\omega \in \Omega$ được gọi là một \textbf{biến cố sơ cấp}.
+        \item Mỗi tập con $A \subseteq \Omega$ được gọi là một \textbf{biến cố}.
+        \item Biến cố chắc chắn sẽ xảy ra trong phép thử được gọi là \textbf{biến cố chắc chắn}, ký hiệu là $\Omega$.
+        \item Biến cố không thể nào xảy ra trong phép thử được gọi là \textbf{biến cố rỗng} (biến cố không thể), ký hiệu là $\emptyset$.
+        \item \textbf{Biến cố ngẫu nhiên:} Là biến cố có thể xảy ra hoặc không xảy ra sau khi thực hiện phép thử.
+    \end{itemize}
+\end{enumerate}
+
+\begin{vidu}
+Xét một sinh viên thi kết thúc môn Xác suất Thống kê (XSTK). Hành động dự thi của sinh viên này là một phép thử.
+\begin{itemize}
+    \item Tập hợp tất cả các điểm số mà sinh viên này có thể đạt được:
+    \[
+    \Omega = \{0;\ 0{,}5;\ 1;\ 1{,}5;\ \dots;\ 9{,}5;\ 10\}
+    \]
+    chính là không gian mẫu.
+    \item Các phần tử $\omega_1 = 0 \in \Omega,\ \omega_2 = 0{,}5 \in \Omega,\ \dots,\ \omega_{21} = 10 \in \Omega$ là các biến cố sơ cấp.
+    \item Các tập con của $\Omega$ là các biến cố, chẳng hạn:
+    \begin{itemize}
+        \item $A = \{4;\ 4{,}5;\ \dots;\ 10\}$ biểu phát thành: ``Sinh viên này thi đạt môn XSTK''.
+        \item $B = \{0;\ 0{,}5;\ \dots;\ 3{,}5\}$ biểu phát thành: ``Sinh viên này thi hỏng môn XSTK''.
+    \end{itemize}
+\end{itemize}
+\end{vidu}
+
+\begin{vidu}
+Từ một nhóm gồm 6 nam và 4 nữ, ta chọn ngẫu nhiên ra 5 người. Khi đó:
+\begin{itemize}
+    \item Biến cố ``Chọn được ít nhất 1 nam'' là biến cố chắc chắn $\Omega$ (vì số nữ chỉ có 4 người, nên không thể chọn ra 5 người toàn nữ).
+    \item Biến cố ``Chọn được 5 người nữ'' là biến cố rỗng $\emptyset$.
+\end{itemize}
+\end{vidu}
+
+\subsection{Quan hệ giữa các biến cố}
+\begin{enumerate}[label=\alph*), leftmargin=1.5em]
+    \item \textbf{Quan hệ kéo theo và tương đương:}
+    \begin{itemize}
+        \item Nếu biến cố $A$ xảy ra kéo theo biến cố $B$ xảy ra, ta nói $A$ kéo theo $B$, ký hiệu là $A \subset B$.
+        \item Nếu $A \subset B$ và $B \subset A$, ta nói $A$ và $B$ tương đương, ký hiệu là $A = B$.
+    \end{itemize}
+
+    \begin{vidu}
+    Quan sát 4 con gà mái đẻ trứng trong 1 ngày. Gọi:
+    \begin{itemize}
+        \item $A_i$: ``Có $i$ con gà mái đẻ trứng trong 1 ngày'', với $i = 0, 1, 2, 3, 4$.
+        \item $A$: ``Có 3 hoặc 4 con gà mái đẻ trứng trong 1 ngày''.
+        \item $B$: ``Có nhiều hơn 2 con gà mái đẻ trứng trong 1 ngày''.
+    \end{itemize}
+    Khi đó, ta có: $A_3 \subset B$, $A_2 \not\subset B$, $B \subset A$ và $A = B$.
+    \end{vidu}
+
+    \item \textbf{Tổng và tích của hai biến cố:}
+    \begin{itemize}
+        \item \textbf{Tổng của hai biến cố $A$ và $B$:} Là một biến cố xảy ra khi $A$ xảy ra hoặc $B$ xảy ra (nghĩa là có ít nhất một trong hai biến cố xảy ra), ký hiệu là $A \cup B$ hay $A + B$.
+        \item \textbf{Tích của hai biến cố $A$ và $B$:} Là một biến cố xảy ra khi cả $A$ và $B$ cùng xảy ra trong một phép thử, ký hiệu là $A \cap B$ hay $AB$.
+    \end{itemize}
+
+    \begin{vidu}
+    Một người thợ săn bắn 2 viên đạn vào một con thú và con thú sẽ chết nếu nó bị trúng cả hai viên đạn.
+    Gọi $A_i$: ``Viên đạn thứ $i$ trúng con thú'' ($i = 1, 2$);
+    $A$: ``Con thú bị trúng đạn'';
+    $B$: ``Con thú bị chết''.\\
+    Khi đó: $A = A_1 \cup A_2$ và $B = A_1 \cap A_2 = A_1 A_2$.
+    \end{vidu}
+
+    \begin{vidu}
+    Xét phép thử gieo hai hạt lúa.
+    Gọi $N_i$: ``Hạt lúa thứ $i$ nảy mầm''; $K_i$: ``Hạt lúa thứ $i$ không nảy mầm'' ($i = 1, 2$).
+    Gọi $A$: ``Có đúng 1 hạt lúa nảy mầm''.
+    \begin{itemize}
+        \item Không gian mẫu: $\Omega = \{K_1 K_2,\ N_1 K_2,\ K_1 N_2,\ N_1 N_2\}$.
+        \item Các biến cố sơ cấp: $\omega_1 = K_1 K_2,\ \omega_2 = N_1 K_2,\ \omega_3 = K_1 N_2,\ \omega_4 = N_1 N_2$.
+        \item Biến cố $A = N_1 K_2 \cup K_1 N_2$ không phải là biến cố sơ cấp.
+    \end{itemize}
+    \end{vidu}
+
+    \item \textbf{Biến cố đối lập và biến cố hiệu:}
+    \begin{itemize}
+        \item \textbf{Hiệu của hai biến cố $A$ và $B$:} Là một biến cố được ký hiệu $A \setminus B$, biến cố hiệu xảy ra khi và chỉ khi $A$ xảy ra nhưng $B$ không xảy ra. Ta có $A \setminus B = A \cap \overline{B}$.
+        \item \textbf{Đối lập của biến cố $A$:} Ký hiệu là $\overline{A}$, là biến cố xảy ra khi $A$ không xảy ra và ngược lại:
+        \[
+        \overline{A} = \Omega \setminus A.
+        \]
+    \end{itemize}
+
+    \begin{vidu}
+    Từ 1 lô hàng chứa 12 chính phẩm và 6 phế phẩm, người ta chọn ngẫu nhiên ra 15 sản phẩm.
+    Gọi $A_i$: ``Chọn được $i$ chính phẩm'' ($i = 9, 10, 11, 12$).
+    \begin{itemize}
+        \item Không gian mẫu: $\Omega = A_9 \cup A_{10} \cup A_{11} \cup A_{12}$.
+        \item Biến cố đối lập của $A_{10}$ là: $\overline{A}_{10} = \Omega \setminus A_{10} = A_9 \cup A_{11} \cup A_{12}$.
+    \end{itemize}
+    \end{vidu}
+\end{enumerate}
+
+\subsection{Hệ đầy đủ các biến cố}
+\begin{enumerate}[label=\alph*), leftmargin=1.5em]
+    \item \textbf{Hai biến cố xung khắc:}
+    Trong một phép thử, nếu hai biến cố $A$ và $B$ không thể cùng đồng thời xảy ra thì ta nói $A$ và $B$ xung khắc với nhau (nghĩa là $A \cap B = \emptyset$).
+
+    \begin{vidu}
+    Hai sinh viên A và B cùng thi môn XSTK. Gọi:
+    \begin{itemize}
+        \item $A$: ``Sinh viên A thi đỗ'';
+        \item $B$: ``Chỉ có sinh viên B thi đỗ'';
+        \item $C$: ``Chỉ có 1 sinh viên thi đỗ''.
+    \end{itemize}
+    Khi đó, $A$ và $B$ là hai biến cố xung khắc; còn $B$ và $C$ không xung khắc.\\
+    \textbf{Chú ý:} $A$ và $B$ xung khắc nhưng không đối lập nhau (vì cả hai có thể cùng thi đỗ hoặc cùng trượt).
+    \end{vidu}
+
+    \item \textbf{Hệ đầy đủ các biến cố:}
+    Trong một phép thử, họ gồm $n$ biến cố $\{A_i\}_{i=1}^n$ được gọi là \textbf{hệ đầy đủ} khi và chỉ khi có \textit{duy nhất} một biến cố $A_{i_0}$ ($i_0 \in \{1, 2, \dots, n\}$) của họ xảy ra. Nghĩa là:
+    \begin{enumerate}[label=\arabic*)]
+        \item $A_i \cap A_j = \emptyset,\ \forall i \ne j$ (xung khắc từng đôi).
+        \item $A_1 \cup A_2 \cup \dots \cup A_n = \Omega$ (tổng bằng không gian mẫu).
+    \end{enumerate}
+
+    \begin{vidu}
+    Trộn lẫn 4 bao lúa vào nhau rồi bốc ngẫu nhiên ra 1 hạt.
+    Gọi $A_i$: ``Hạt lúa bốc được là của bao thứ $i$'' ($i = 1, 2, 3, 4$).
+    Khi đó hệ $\{A_1, A_2, A_3, A_4\}$ là một hệ đầy đủ.
+    \end{vidu}
+
+    \begin{chuy}
+    Trong 1 phép thử bất kỳ, hệ $\{A, \overline{A}\}$ luôn là một hệ đầy đủ với biến cố $A$ tùy ý.
+    \end{chuy}
+\end{enumerate}
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+\section{Xác suất của biến cố}
+
+\subsection{Khái niệm xác suất}
+Quan sát các biến cố đối với một phép thử, mặc dù không thể khẳng định chắc chắn một biến cố có xảy ra hay không nhưng người ta có thể phỏng đoán khả năng xảy ra của biến cố này là ít hay nhiều.
+Khả năng xảy ra khách quan của một biến cố được gọi là \textbf{xác suất} (\textit{probability}) của biến cố đó.
+Xác suất của biến cố $A$, ký hiệu là $P(A)$, có thể được định nghĩa bằng nhiều phương pháp:
+\begin{itemize}[leftmargin=1.5em]
+    \item Định nghĩa theo dạng cổ điển.
+    \item Định nghĩa theo dạng thống kê.
+    \item Định nghĩa theo hệ tiên đề Kolmogorov.
+    \item Định nghĩa theo dạng hình học.
+\end{itemize}
+
+\subsection{Định nghĩa xác suất dạng cổ điển}
+Xét một phép thử với không gian mẫu hữu hạn $\Omega = \{\omega_1, \dots, \omega_n\}$ và biến cố $A \subset \Omega$ có $k$ phần tử. Nếu $n$ biến cố sơ cấp có cùng khả năng xảy ra (\textit{đồng khả năng}) thì xác suất của biến cố $A$ được định nghĩa là:
+\[
+P(A) = \frac{\text{Số trường hợp } A \text{ xảy ra}}{\text{Số trường hợp có thể xảy ra}} = \frac{k}{n}.
+\]
+
+\begin{vidu}
+Một công ty cần tuyển hai nhân viên. Có 4 người nữ và 2 người nam nộp đơn ngẫu nhiên (khả năng trúng tuyển của 6 người là như nhau). Tính xác suất để:
+\begin{enumerate}[label=\arabic*)]
+    \item Cả hai người trúng tuyển đều là nữ.
+    \item Có ít nhất một người nữ trúng tuyển.
+\end{enumerate}
+\textit{Giải.} 
+Số trường hợp có thể xảy ra khi chọn ngẫu nhiên 2 người từ 6 người là:
+\[
+n = C_6^2 = 15.
+\]
+\begin{enumerate}[label=\arabic*)]
+    \item Gọi $A$: ``Cả hai người trúng tuyển đều là nữ''.\\
+    Số trường hợp thuận lợi cho $A$ xảy ra là: $k = C_4^2 = 6$.\\
+    Vậy:
+    \[
+    P(A) = \frac{k}{n} = \frac{6}{15} = \frac{2}{5} = 0{,}4.
+    \]
+    \item Gọi $B$: ``Có ít nhất một người nữ trúng tuyển''.\\
+    Trong 15 trường hợp, chỉ có đúng $C_2^2 = 1$ trường hợp cả hai người trúng tuyển đều là nam.\\
+    Suy ra số trường hợp thuận lợi cho $B$ xảy ra là: $k = 15 - 1 = 14$.\\
+    Vậy:
+    \[
+    P(B) = \frac{14}{15} \approx 0{,}9333.
+    \]
+\end{enumerate}
+\end{vidu}
+
+\begin{vidu}
+Từ một hộp chứa 6 sản phẩm tốt và 4 phế phẩm, người ta chọn ngẫu nhiên ra 5 sản phẩm. Tính xác suất để có:
+\begin{enumerate}[label=\arabic*)]
+    \item Cả 5 sản phẩm đều tốt.
+    \item Đúng 2 phế phẩm.
+\end{enumerate}
+\textit{Giải.} Chọn ngẫu nhiên từ hộp ra 5 sản phẩm tùy ý có: $n = C_{10}^5 = 252$ cách.
+\begin{enumerate}[label=\arabic*)]
+    \item Gọi $A$: ``Chọn được 5 sản phẩm tốt''.\\
+    Số cách chọn 5 sản phẩm tốt từ 6 sản phẩm tốt là: $k = C_6^5 = 6$.\\
+    Vậy:
+    \[
+    P(A) = \frac{k}{n} = \frac{C_6^5}{C_{10}^5} = \frac{6}{252} = \frac{1}{42} \approx 0{,}0238.
+    \]
+    \item Gọi $B$: ``Chọn đúng 2 phế phẩm''.\\
+    Chọn từ hộp ra 5 sản phẩm trong đó có đúng 2 phế phẩm (và 3 sản phẩm còn lại là tốt) có số cách là: $k = C_4^2 \cdot C_6^3 = 6 \cdot 20 = 120$.\\
+    Vậy:
+    \[
+    P(B) = \frac{C_4^2 \cdot C_6^3}{C_{10}^5} = \frac{120}{252} = \frac{10}{21} \approx 0{,}4762 = 47{,}62\%.
+    \]
+\end{enumerate}
+\end{vidu}
+
+\begin{vidu}
+Tại một bệnh viện có 50 người đang chờ kết quả khám bệnh. Trong đó có 12 người chờ kết quả nội soi, 15 người chờ kết quả siêu âm, 7 người chờ kết quả cả nội soi và siêu âm. Gọi tên ngẫu nhiên một người trong 50 người này, hãy tính xác suất gọi được người đang chờ kết quả nội soi hoặc siêu âm?\\
+\textit{Giải.} Gọi $A$ là biến cố: ``Gọi được người đang chờ kết quả nội soi hoặc siêu âm''.
+Từ biểu đồ Ven:
+\begin{itemize}
+    \item Số người chỉ chờ nội soi: $12 - 7 = 5$.
+    \item Số người chỉ chờ siêu âm: $15 - 7 = 8$.
+    \item Số người chờ cả hai: $7$.
+\end{itemize}
+Tổng số người chờ kết quả nội soi hoặc siêu âm là: $5 + 7 + 8 = 20$.\\
+Vậy:
+\[
+P(A) = \frac{20}{50} = \frac{2}{5} = 40\%.
+\]
+\end{vidu}
+
+\begin{chuy}[\textbf{Ưu điểm và hạn chế của định nghĩa dạng cổ điển}]
+\begin{itemize}
+    \item \textbf{Ưu điểm:} Tính được chính xác giá trị của xác suất thuần túy bằng giải tích tổ hợp mà không cần tiến hành thực nghiệm.
+    \item \textbf{Hạn chế:} Chỉ áp dụng được cho các phép thử có không gian mẫu hữu hạn và các biến cố sơ cấp phải có tính đồng khả năng.
+\end{itemize}
+\end{chuy}
+
+\subsection{Định nghĩa xác suất dạng thống kê}
+\begin{itemize}[leftmargin=1.5em]
+    \item Nếu khi thực hiện một phép thử nào đó $n$ lần, thấy có $k$ lần biến cố $A$ xuất hiện thì tỉ số $f_n(A) = \dfrac{k}{n}$ được gọi là \textbf{tần suất} của biến cố $A$.
+    \item Khi $n$ thay đổi, tần suất cũng thay đổi theo nhưng luôn dao động quanh một số cố định $p = \lim_{n \to \infty} \dfrac{k}{n}$.
+    \item Số $p$ cố định này được gọi là \textbf{xác suất} của biến cố $A$ theo nghĩa thống kê.
+    \item Trong thực tế, khi $n$ đủ lớn thì:
+    \[
+    P(A) \approx \frac{k}{n}.
+    \]
+\end{itemize}
+
+\begin{nhanxet}
+Định nghĩa xác suất theo dạng thống kê chỉ cho giá trị xấp xỉ và mức độ chính xác tùy thuộc vào số lần thực hiện phép thử $n$.
+\end{nhanxet}
+
+\begin{vidu}[\textbf{Các dữ liệu thực nghiệm lịch sử}]
+\begin{itemize}
+    \item \textbf{Pearson} đã gieo một đồng tiền cân đối, đồng chất $12.000$ lần thấy có $6.019$ lần xuất hiện mặt sấp (tần suất là $0{,}5016$); gieo $24.000$ lần thấy có $12.012$ lần xuất hiện mặt sấp (tần suất là $0{,}5005$).
+    \item \textbf{Laplace} đã nghiên cứu tỉ lệ sinh trai -- gái ở London, Petecbua và Berlin trong 10 năm và đưa ra tần suất sinh bé gái là $\dfrac{21}{43} \approx 0{,}4884$.
+    \item \textbf{Cramer} đã nghiên cứu tỉ lệ sinh trai -- gái ở Thụy Điển trong năm 1935 và kết quả có $42.591$ bé gái được sinh ra trong tổng số $88.273$ trẻ sơ sinh, tần suất là $0{,}4825$.
+\end{itemize}
+\end{vidu}
+
+\subsection{Định nghĩa xác suất theo tiên đề (Hệ tiên đề Kolmogorov)}
+\begin{dinhnghia}
+Xét phép thử có không gian mẫu là $\Omega$. Xác suất là một hàm số $P: \mathcal{F}(\Omega) \to [0, 1]$ gán cho mỗi biến cố $A$ một số thực $P(A)$, thỏa mãn các điều kiện tiên đề sau:
+\begin{enumerate}[label=\arabic*)]
+    \item $P(\Omega) = 1$.
+    \item Với bất kỳ họ đếm được các biến cố xung khắc từng đôi $A_1, A_2, \dots$ ($A_i \cap A_j = \emptyset,\ \forall i \ne j$), ta có:
+    \[
+    P(A_1 \cup A_2 \cup \dots) = P(A_1) + P(A_2) + \dots
+    \]
+\end{enumerate}
+Từ hệ tiên đề trên suy ra các hệ quả cơ bản:
+\[
+0 \le P(A) \le 1,\qquad P(\emptyset) = 0,\qquad P(\Omega) = 1.
+\]
+\end{dinhnghia}
+
+\subsection{Định nghĩa xác suất dạng hình học}
+Cho miền $\Omega$. Gọi độ đo của $\Omega$ là độ dài, diện tích, hoặc thể tích (tùy theo $\Omega$ là đường cong, miền phẳng, hay khối hình học). Xét một điểm $M$ rơi ngẫu nhiên vào miền $\Omega$.
+
+Gọi biến cố $A$: ``Điểm $M$ rơi vào miền $S \subset \Omega$'', xác suất của $A$ được xác định bởi:
+\[
+P(A) = \frac{\text{độ đo } S}{\text{độ đo } \Omega}.
+\]
+
+\begin{vidu}
+Tìm xác suất để một điểm $M$ rơi ngẫu nhiên vào hình tròn nội tiếp một tam giác đều có cạnh $2\text{ cm}$.\\
+\textit{Giải.} Gọi $A$: ``Điểm $M$ rơi vào hình tròn nội tiếp''.
+\begin{itemize}
+    \item Diện tích tam giác đều:
+    \[
+    dt(\Omega) = \frac{2^2 \cdot \sqrt{3}}{4} = \sqrt{3}\text{ cm}^2.
+    \]
+    \item Bán kính của đường tròn nội tiếp tam giác đều:
+    \[
+    r = \frac{1}{3} \cdot \frac{2\sqrt{3}}{2} = \frac{\sqrt{3}}{3}\text{ cm}.
+    \]
+    \item Diện tích hình tròn:
+    \[
+    dt(S) = \pi r^2 = \pi \left(\frac{\sqrt{3}}{3}\right)^2 = \frac{\pi}{3}\text{ cm}^2.
+    \]
+\end{itemize}
+Vậy:
+\[
+P(A) = \frac{dt(S)}{dt(\Omega)} = \frac{\frac{\pi}{3}}{\sqrt{3}} = \frac{\pi}{3\sqrt{3}} \approx 0{,}6046.
+\]
+\end{vidu}
+
+\begin{vidu}[\textbf{Bài toán cuộc hẹn}]
+Hai người bạn hẹn gặp nhau tại 1 địa điểm xác định trong khoảng thời gian từ 7h đến 8h. Mỗi người đến điểm hẹn một cách độc lập, nếu không gặp người kia thì chỉ đợi đúng 30 phút (hoặc đến 8h thì không đợi nữa). Tìm xác suất để hai người gặp nhau.\\
+\textit{Giải.}
+Chọn mốc thời gian 7h là 0 và 8h là 1 (đơn vị: giờ).
+Gọi $x, y$ lần lượt là thời điểm đến điểm hẹn của hai người, ta có:
+\[
+0 \le x \le 1, \quad 0 \le y \le 1.
+\]
+Suy ra không gian mẫu $\Omega = [0, 1] \times [0, 1]$ là một hình vuông cạnh bằng 1, có diện tích:
+\[
+dt(\Omega) = 1 \cdot 1 = 1.
+\]
+Hai người gặp nhau khi và chỉ khi khoảng thời gian đến cách nhau không quá 30 phút ($0{,}5$ giờ):
+\[
+|x - y| \le 0{,}5 \iff \begin{cases}
+x - y \le 0{,}5 \\
+x - y \ge -0{,}5
+\end{cases} \iff \begin{cases}
+x - y - 0{,}5 \le 0 \\
+x - y + 0{,}5 \ge 0
+\end{cases}
+\]
+Suy ra miền gặp nhau của hai người là:
+\[
+S = \left\{(x, y) \in [0, 1]^2 \;\middle|\; x - y - 0{,}5 \le 0, \; x - y + 0{,}5 \ge 0\right\}.
+\]
+Diện tích miền $S$ bằng diện tích hình vuông trừ đi diện tích của 2 tam giác vuông cân ở hai góc (mỗi tam giác có hai cạnh góc vuông dài $0{,}5$):
+\[
+dt(S) = 1 - 2 \cdot \left(\frac{1}{2} \cdot 0{,}5 \cdot 0{,}5\right) = 1 - 0{,}25 = 0{,}75 = \frac{3}{4}.
+\]
+Vậy xác suất hai người gặp nhau là:
+\[
+p = \frac{dt(S)}{dt(\Omega)} = \frac{3}{4} = 75\%.
+\]
+\end{vidu}
+
+\subsection{Tính chất cơ bản của xác suất}
+\begin{enumerate}[label=\arabic*), leftmargin=1.5em]
+    \item Nếu $A$ là một biến cố tùy ý thì:
+    \[
+    0 \le P(A) \le 1.
+    \]
+    \item Xác suất của biến cố rỗng:
+    \[
+    P(\emptyset) = 0.
+    \]
+    \item Xác suất của biến cố chắc chắn:
+    \[
+    P(\Omega) = 1.
+    \]
+    \item Nếu $A \subset B$ thì:
+    \[
+    P(A) \le P(B).
+    \]
+\end{enumerate}
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+\section{Công thức tính xác suất}
+
+\subsection{Công thức cộng xác suất}
+Xét một phép thử, ta có các công thức cộng xác suất sau:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Hai biến cố tùy ý $A$ và $B$:}
+    \[
+    P(A \cup B) = P(A) + P(B) - P(A \cap B).
+    \]
+    \item \textbf{Hai biến cố xung khắc ($A \cap B = \emptyset$):}
+    \[
+    P(A \cup B) = P(A) + P(B).
+    \]
+    \item \textbf{Họ $n$ biến cố $\{A_i\}_{i=1}^n$ xung khắc từng đôi:}
+    \[
+    P(A_1 \cup A_2 \cup \dots \cup A_n) = P(A_1) + P(A_2) + \dots + P(A_n).
+    \]
+    \item \textbf{Đối với hệ đầy đủ $\{A_i\}_{i=1}^n$:}
+    \begin{itemize}
+        \item Nếu $\{A_i\}$ là hệ đầy đủ thì $P(A_1) + P(A_2) + \dots + P(A_n) = 1$.
+        \item Nếu $P(A_1) + P(A_2) + \dots + P(A_n) \ne 1$ thì $\{A_i\}$ không phải là hệ đầy đủ.
+    \end{itemize}
+    \item \textbf{Các hệ thức đặc biệt:}
+    \begin{itemize}
+        \item Xác suất biến cố đối lập:
+        \[
+        P(A) = 1 - P(\overline{A}).
+        \]
+        \item Khai triển theo một biến cố $B$:
+        \[
+        P(A) = P(A \cap B) + P(A \cap \overline{B}).
+        \]
+        \item Công thức De Morgan:
+        \[
+        \overline{A \cap B} = \overline{A} \cup \overline{B}; \qquad \overline{A \cup B} = \overline{A} \cap \overline{B}.
+        \]
+    \end{itemize}
+\end{itemize}
+
+\begin{vidu}
+Một nhóm có 30 nhà đầu tư các loại, trong đó có: 13 nhà đầu tư vàng; 17 nhà đầu tư chứng khoán và 10 nhà đầu tư cả vàng lẫn chứng khoán. Một đối tác gặp ngẫu nhiên một nhà đầu tư trong nhóm. Tìm xác suất để người đó gặp được nhà đầu tư vàng hoặc chứng khoán?\\
+\textit{Giải.} Gọi:
+\begin{itemize}
+    \item $A$: ``Đối tác gặp nhà đầu tư vàng hoặc chứng khoán''.
+    \item $V$: ``Đối tác gặp nhà đầu tư vàng'' $\implies P(V) = \dfrac{13}{30}$.
+    \item $C$: ``Đối tác gặp nhà đầu tư chứng khoán'' $\implies P(C) = \dfrac{17}{30}$.
+\end{itemize}
+Ta có $V \cap C$ là biến cố gặp nhà đầu tư cả vàng và chứng khoán với $P(V \cap C) = \dfrac{10}{30}$.\\
+Áp dụng công thức cộng:
+\[
+P(A) = P(V \cup C) = P(V) + P(C) - P(V \cap C) = \frac{13}{30} + \frac{17}{30} - \frac{10}{30} = \frac{20}{30} = \frac{2}{3}.
+\]
+\end{vidu}
+
+\begin{vidu}
+Một hộp phấn có 10 viên trong đó có 3 viên màu đỏ. Lấy ngẫu nhiên từ hộp ra 3 viên phấn. Tính xác suất để lấy được ít nhất 1 viên phấn màu đỏ.\\
+\textit{Giải.} Gọi $A$: ``Lấy được ít nhất 1 viên phấn màu đỏ''; $A_i$: ``Lấy được $i$ viên phấn màu đỏ'' ($i = 0, 1, 2, 3$).
+\begin{itemize}
+    \item \textbf{Cách 1 (cộng trực tiếp):} Vì $\{A_1, A_2, A_3\}$ xung khắc từng đôi:
+    \[
+    P(A) = P(A_1) + P(A_2) + P(A_3) = \frac{C_3^1 C_7^2}{C_{10}^3} + \frac{C_3^2 C_7^1}{C_{10}^3} + \frac{C_3^3 C_7^0}{C_{10}^3} = \frac{63 + 21 + 1}{120} = \frac{85}{120} = \frac{17}{24}.
+    \]
+    \item \textbf{Cách 2 (biến cố đối lập):} Biến cố đối lập của $A$ là $A_0$: ``Không lấy được viên phấn đỏ nào'' (cả 3 viên đều màu trắng):
+    \[
+    P(A) = 1 - P(A_0) = 1 - \frac{C_3^0 C_7^3}{C_{10}^3} = 1 - \frac{35}{120} = \frac{85}{120} = \frac{17}{24}.
+    \]
+\end{itemize}
+\end{vidu}
+
+\begin{vidu}
+Trong một vùng dân cư, tỉ lệ người mắc bệnh tim là 9\%; mắc bệnh huyết áp là 12\%; mắc cả bệnh tim và huyết áp là 7\%. Chọn ngẫu nhiên 1 người trong vùng đó. Tính xác suất để người này không mắc bệnh tim và không mắc bệnh huyết áp?\\
+\textit{Giải.} Gọi:
+\begin{itemize}
+    \item $A$: ``Người được chọn mắc bệnh tim'' $\implies P(A) = 0{,}09$.
+    \item $B$: ``Người được chọn mắc bệnh huyết áp'' $\implies P(B) = 0{,}12$.
+    \item $AB$: ``Người được chọn mắc cả hai bệnh'' $\implies P(AB) = 0{,}07$.
+    \item $H$: ``Người được chọn không mắc cả hai bệnh trên''.
+\end{itemize}
+Ta có $H = \overline{A} \cap \overline{B}$. Theo luật De Morgan: $\overline{H} = \overline{\overline{A} \cap \overline{B}} = A \cup B$.\\
+Do đó:
+\begin{align*}
+P(H) &= 1 - P(\overline{H}) = 1 - P(A \cup B) \\
+     &= 1 - [P(A) + P(B) - P(AB)] \\
+     &= 1 - 0{,}09 - 0{,}12 + 0{,}07 = 0{,}86 = 86\%.
+\end{align*}
+\end{vidu}
+
+\subsection{Xác suất có điều kiện và các công thức liên quan}
+
+\subsubsection{Khái niệm và định nghĩa xác suất có điều kiện}
+\textbf{Dẫn dắt bài toán:} Xét phép thử: có 3 người A, B và C thi tuyển vào một công ty.
+Gọi $A$: ``Người A thi đỗ''; $B$: ``Người B thi đỗ''; $C$: ``Người C thi đỗ''.
+Gọi $H$: ``Có đúng 2 người thi đỗ''.\\
+Khi đó, không gian mẫu $\Omega$ ban đầu gồm $2^3 = 8$ biến cố sơ cấp:
+\[
+\Omega = \{ABC,\ \overline{A}BC,\ A\overline{B}C,\ AB\overline{C},\ \overline{A}\,\overline{B}C,\ \overline{A}B\overline{C},\ A\overline{B}\,\overline{C},\ \overline{A}\,\overline{B}\,\overline{C}\}.
+\]
+Trong đó:
+\[
+A = \{ABC,\ A\overline{B}C,\ AB\overline{C},\ A\overline{B}\,\overline{C}\} \implies P(A) = \frac{4}{8} = \frac{1}{2}.
+\]
+\[
+H = \{\overline{A}BC,\ A\overline{B}C,\ AB\overline{C}\} \implies P(H) = \frac{3}{8}.
+\]
+Bây giờ, giả sử ta biết thêm thông tin chắc chắn rằng \textit{có đúng 2 người thi đỗ} (tức biến cố $H$ đã xảy ra).
+Lúc này không gian mẫu bị thu hẹp lại thành $H$, và biến cố ``Người A thi đỗ'' thu hẹp lại thành $AH = \{A\overline{B}C,\ AB\overline{C}\}$.
+Xác suất để A thi đỗ với điều kiện $H$ đã xảy ra ký hiệu là $P(A|H)$, và ta có:
+\[
+P(A|H) = \frac{2}{3} = \frac{P(AH)}{P(H)}.
+\]
+
+\begin{dinhnghia}
+Trong một phép thử, xét hai biến cố bất kỳ $A$ và $B$ với $P(B) > 0$. Xác suất có điều kiện của biến cố $A$ với điều kiện biến cố $B$ đã xảy ra được ký hiệu và định nghĩa là:
+\[
+P(A|B) = \frac{P(A \cap B)}{P(B)}.
+\]
+\end{dinhnghia}
+
+\begin{nhanxet}
+Khi tính $P(A|B)$ với điều kiện $B$ đã xảy ra, ta đã thu hẹp không gian mẫu $\Omega$ xuống còn $B$, và thu hẹp biến cố $A$ xuống còn $A \cap B$.
+\end{nhanxet}
+
+\begin{tinhchat}
+\begin{enumerate}[label=\arabic*)]
+    \item $0 \le P(A|B) \le 1,\quad \forall A \subset \Omega$.
+    \item Nếu $A \subset C$ thì $P(A|B) \le P(C|B)$.
+    \item $P(\overline{A}|B) = 1 - P(A|B)$.
+\end{enumerate}
+\end{tinhchat}
+
+\begin{vidu}
+Một nhóm 10 sinh viên gồm 3 nam và 7 nữ, trong đó có 2 nam 18 tuổi và 3 nữ 18 tuổi. Chọn ngẫu nhiên 1 sinh viên từ nhóm đó.
+Gọi $A$: ``Sinh viên được chọn là nữ''; $B$: ``Sinh viên được chọn là 18 tuổi''.
+Hãy tính $P(A|B)$ và $P(B|A)$.\\
+\textit{Giải.} 
+Ta có: $P(A) = \dfrac{7}{10} = 0{,}7$; $P(B) = \dfrac{2 + 3}{10} = 0{,}5$; $P(A \cap B) = \dfrac{3}{10} = 0{,}3$.
+\begin{itemize}
+    \item \textbf{Cách 1 (theo định nghĩa):}
+    \[
+    P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{0{,}3}{0{,}5} = 0{,}6.
+    \]
+    \[
+    P(B|A) = \frac{P(B \cap A)}{P(A)} = \frac{0{,}3}{0{,}7} = \frac{3}{7}.
+    \]
+    \item \textbf{Cách 2 (thu hẹp không gian mẫu):}
+    \[
+    P(A|B) = \frac{\text{Số sinh viên nữ 18 tuổi}}{\text{Số sinh viên 18 tuổi}} = \frac{3}{5} = 0{,}6.
+    \]
+    \[
+    P(B|A) = \frac{\text{Số sinh viên 18 tuổi là nữ}}{\text{Số sinh viên nữ}} = \frac{3}{7}.
+    \]
+\end{itemize}
+\end{vidu}
+
+\subsubsection{Công thức nhân xác suất}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Sự độc lập của hai biến cố:}
+    Trong một phép thử, hai biến cố $A$ và $B$ được gọi là \textbf{độc lập} nếu sự xảy ra hay không xảy ra của biến cố này không làm ảnh hưởng đến xác suất xảy ra của biến cố kia, nghĩa là:
+    \[
+    P(A|B) = P(A) \quad \text{và} \quad P(B|A) = P(B).
+    \]
+    \begin{chuy}
+    Nếu $A$ và $B$ độc lập với nhau thì các cặp biến cố: $\overline{A}$ và $B$, $A$ và $\overline{B}$, $\overline{A}$ và $\overline{B}$ cũng độc lập với nhau.
+    \end{chuy}
+
+    \item \textbf{Công thức nhân cho hai biến cố:}
+    \begin{itemize}
+        \item Nếu $A$ và $B$ là hai biến cố bất kỳ (không nhất thiết độc lập):
+        \[
+        P(A \cap B) = P(A) \cdot P(B|A) = P(B) \cdot P(A|B).
+        \]
+        \item Nếu $A$ và $B$ là hai biến cố độc lập:
+        \[
+        P(A \cap B) = P(A) \cdot P(B).
+        \]
+    \end{itemize}
+
+    \item \textbf{Công thức nhân cho $n$ biến cố:}
+    \begin{itemize}
+        \item Nếu $n$ biến cố $A_i$ ($i = 1, \dots, n$) tùy ý:
+        \[
+        P(A_1 A_2 \dots A_n) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \dots P(A_n | A_1 A_2 \dots A_{n-1}).
+        \]
+        \item Nếu $n$ biến cố $A_i$ độc lập toàn phần:
+        \[
+        P(A_1 A_2 \dots A_n) = P(A_1) \cdot P(A_2) \dots P(A_n).
+        \]
+    \end{itemize}
+\end{itemize}
+
+\begin{vidu}
+Một người có 5 bóng đèn trong đó có 2 bóng bị hỏng. Người đó thử ngẫu nhiên lần lượt từng bóng đèn (không hoàn lại) cho đến khi chọn được 1 bóng tốt. Tính xác suất để người đó thử đến lần thứ 2.\\
+\textit{Giải.} 
+Gọi $A$: ``Người đó thử đến lần thứ 2''; $A_i$: ``Bóng đèn được thử lần thứ $i$ là tốt'' ($i = 1, \dots, 5$).\\
+Thử đến lần thứ 2 nghĩa là lần 1 chọn phải bóng hỏng ($\overline{A}_1$) và lần 2 chọn được bóng tốt ($A_2$):
+\[
+A = \overline{A}_1 \cap A_2.
+\]
+Áp dụng công thức nhân xác suất:
+\[
+P(A) = P(\overline{A}_1 \cap A_2) = P(\overline{A}_1) \cdot P(A_2 | \overline{A}_1) = \frac{2}{5} \cdot \frac{3}{4} = \frac{6}{20} = 30\%.
+\]
+\end{vidu}
+
+\begin{vidu}
+Một sinh viên học hệ niên chế được thi lại 1 lần nếu lần thi thứ nhất bị rớt (hai lần thi độc lập). Biết rằng xác suất để sinh viên này thi đỗ lần 1 và lần 2 tương ứng là 60\% và 80\%. Tính xác suất sinh viên này thi đỗ môn học.\\
+\textit{Giải.} Gọi $A$: ``Sinh viên này thi đỗ''; $A_i$: ``Sinh viên này thi đỗ lần thứ $i$'' ($i = 1, 2$).\\
+Ta có: $P(A_1) = 0{,}6$; $P(A_2) = 0{,}8$.
+\begin{itemize}
+    \item \textbf{Cách 1 (trực tiếp):} Sinh viên thi đỗ nếu đỗ ngay lần 1 hoặc rớt lần 1 nhưng đỗ lần 2:
+    \begin{align*}
+    P(A) &= P(A_1 \cup \overline{A}_1 A_2) = P(A_1) + P(\overline{A}_1 A_2) \\
+         &= P(A_1) + P(\overline{A}_1) \cdot P(A_2) \\
+         &= 0{,}6 + (1 - 0{,}6) \cdot 0{,}8 = 0{,}6 + 0{,}32 = 0{,}92 = 92\%.
+    \end{align*}
+    \item \textbf{Cách 2 (biến cố đối lập):} Biến cố đối lập là sinh viên rớt cả hai lần thi:
+    \[
+    P(A) = 1 - P(\overline{A}_1 \overline{A}_2) = 1 - P(\overline{A}_1) \cdot P(\overline{A}_2) = 1 - 0{,}4 \cdot 0{,}2 = 1 - 0{,}08 = 0{,}92.
+    \]
+\end{itemize}
+\end{vidu}
+
+\begin{vidu}
+Có hai nhà đầu tư A và B cùng đặt lệnh (độc lập) để mua cổ phiếu của một công ty với xác suất mua được tương ứng là $0{,}8$ và $0{,}7$. Biết rằng có người mua được, xác suất để người A mua được cổ phiếu này là:
+\[
+\text{A. } \frac{19}{47}; \qquad \text{B. } \frac{40}{19}; \qquad \text{C. } \frac{40}{47}; \qquad \text{D. } \frac{10}{19}.
+\]
+\textit{Giải.} Gọi:
+\begin{itemize}
+    \item $C$: ``Có người mua được cổ phiếu''.
+    \item $A$: ``Người A mua được cổ phiếu'' $\implies P(A) = 0{,}8 \implies P(\overline{A}) = 0{,}2$.
+    \item $B$: ``Người B mua được cổ phiếu'' $\implies P(B) = 0{,}7 \implies P(\overline{B}) = 0{,}3$.
+\end{itemize}
+Cần tính $P(A|C) = \dfrac{P(AC)}{P(C)}$.
+\begin{itemize}
+    \item \textbf{Cách 1:}
+    \[
+    AC = A\overline{B} \cup AB \implies P(AC) = 0{,}8 \cdot 0{,}3 + 0{,}8 \cdot 0{,}7 = 0{,}8.
+    \]
+    \[
+    C = A\overline{B} \cup \overline{A}B \cup AB \implies P(C) = 0{,}8 \cdot 0{,}3 + 0{,}2 \cdot 0{,}7 + 0{,}8 \cdot 0{,}7 = 0{,}24 + 0{,}14 + 0{,}56 = 0{,}94.
+    \]
+    Suy ra:
+    \[
+    P(A|C) = \frac{0{,}8}{0{,}94} = \frac{40}{47} \implies \text{Chọn C.}
+    \]
+    \item \textbf{Cách 2:}
+    Nhận thấy $A \subset C$ nên $AC = A \implies P(AC) = P(A) = 0{,}8$.
+    Mặt khác $\overline{C} = \overline{A}\,\overline{B} \implies P(C) = 1 - P(\overline{C}) = 1 - P(\overline{A}\,\overline{B}) = 1 - 0{,}2 \cdot 0{,}3 = 0{,}94$.\\
+    Do đó:
+    \[
+    P(A|C) = \frac{P(A)}{1 - P(\overline{A}\,\overline{B})} = \frac{0{,}8}{1 - 0{,}2 \cdot 0{,}3} = \frac{40}{47}.
+    \]
+\end{itemize}
+\end{vidu}
+
+\begin{vidu}
+Trong dịp tết, ông A đem bán 1 cây mai lớn và 1 cây mai nhỏ. Xác suất bán được cây mai lớn là $0{,}9$. Nếu bán được cây mai lớn thì xác suất bán được cây mai nhỏ là $0{,}7$. Nếu cây mai lớn không bán được thì xác suất bán được cây mai nhỏ là $0{,}2$. Biết rằng ông A bán được ít nhất 1 cây mai, xác suất để ông A bán được cả hai cây mai là:
+\[
+\text{A. } 0{,}6342; \qquad \text{B. } 0{,}6848; \qquad \text{C. } 0{,}4796; \qquad \text{D. } 0{,}8791.
+\]
+\textit{Giải.} Gọi:
+\begin{itemize}
+    \item $A_1$: ``Ông A bán được cây mai lớn'' $\implies P(A_1) = 0{,}9,\ P(\overline{A}_1) = 0{,}1$.
+    \item $A_2$: ``Ông A bán được cây mai nhỏ''.
+    Theo đề: $P(A_2 | A_1) = 0{,}7$; $P(A_2 | \overline{A}_1) = 0{,}2 \implies P(\overline{A}_2 | \overline{A}_1) = 1 - 0{,}2 = 0{,}8$.
+    \item $B$: ``Ông A bán được ít nhất 1 cây mai'' $\implies \overline{B} = \overline{A}_1 \overline{A}_2$.
+\end{itemize}
+Xác suất bán được cả hai cây mai khi biết bán được ít nhất 1 cây:
+\begin{align*}
+P(A_1 A_2 | B) &= \frac{P(A_1 A_2 B)}{P(B)} = \frac{P(A_1 A_2)}{1 - P(\overline{A}_1 \overline{A}_2)} \\
+               &= \frac{P(A_1) \cdot P(A_2 | A_1)}{1 - P(\overline{A}_1) \cdot P(\overline{A}_2 | \overline{A}_1)} \\
+               &= \frac{0{,}9 \cdot 0{,}7}{1 - 0{,}1 \cdot 0{,}8} = \frac{0{,}63}{0{,}92} \approx 0{,}6848 \implies \text{Chọn B.}
+\end{align*}
+\end{vidu}
+
+\begin{vidu}
+Hai người A và B cùng chơi trò chơi như sau: Cả hai luân phiên lấy mỗi lần 1 viên bi từ một hộp đựng 2 bi trắng và 4 bi đen (bi lấy ra không trả lại hộp). Người nào lấy được bi trắng trước thì thắng cuộc. Giả sử A lấy trước, tính xác suất A thắng cuộc.\\
+\textit{Giải.} 
+Gọi $A$: ``Người A thắng cuộc'';
+$A_i$: ``Người A lấy được bi trắng ở lượt thứ $i$'';
+$B_i$: ``Người B lấy được bi trắng ở lượt thứ $i$''.\\
+Người A lấy ở các lượt thứ 1, 3, 5:
+\begin{itemize}
+    \item A thắng ở lượt 1: $A_1$, với xác suất $\dfrac{2}{6}$.
+    \item A thắng ở lượt 3: $\overline{A}_1 \overline{B}_1 A_2$, với xác suất $\dfrac{4}{6} \cdot \dfrac{3}{5} \cdot \dfrac{2}{4}$.
+    \item A thắng ở lượt 5: $\overline{A}_1 \overline{B}_1 \overline{A}_2 \overline{B}_2 A_3$, với xác suất $\dfrac{4}{6} \cdot \dfrac{3}{5} \cdot \dfrac{2}{4} \cdot \dfrac{1}{3} \cdot 1$.
+\end{itemize}
+Do các trường hợp xung khắc đôi một:
+\[
+A = A_1 \cup \overline{A}_1 \overline{B}_1 A_2 \cup \overline{A}_1 \overline{B}_1 \overline{A}_2 \overline{B}_2 A_3.
+\]
+Suy ra:
+\[
+P(A) = \frac{2}{6} + \frac{4}{6} \cdot \frac{3}{5} \cdot \frac{2}{4} + \frac{4}{6} \cdot \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{1}{3} \cdot 1 = \frac{1}{3} + \frac{1}{5} + \frac{1}{15} = \frac{5 + 3 + 1}{15} = \frac{9}{15} = \frac{3}{5}.
+\]
+\end{vidu}
+
+\subsubsection{Công thức xác suất đầy đủ và Công thức Bayes}
+
+\paragraph{a) Công thức xác suất đầy đủ}
+Xét họ $n$ biến cố $\{A_i\}_{i=1}^n$ lập thành một hệ đầy đủ và $B$ là một biến cố bất kỳ trong cùng một phép thử. Khi đó:
+\[
+P(B) = \sum_{i=1}^n P(A_i) \cdot P(B|A_i) = P(A_1) \cdot P(B|A_1) + P(A_2) \cdot P(B|A_2) + \dots + P(A_n) \cdot P(B|A_n).
+\]
+
+\begin{proof}
+Vì $\{A_i\}_{i=1}^n$ là hệ đầy đủ nên $\Omega = \bigcup_{i=1}^n A_i$ và các $A_i$ xung khắc từng đôi.\\
+Biến cố $B$ có thể phân tích thành:
+\[
+B = B \cap \Omega = B \cap \left(\bigcup_{i=1}^n A_i\right) = \bigcup_{i=1}^n (B \cap A_i).
+\]
+Do các biến cố $B \cap A_i$ xung khắc từng đôi, theo công thức cộng xác suất:
+\[
+P(B) = \sum_{i=1}^n P(B \cap A_i) = \sum_{i=1}^n P(A_i) \cdot P(B|A_i).
+\]
+\end{proof}
+
+\begin{vidu}
+Một cửa hàng bán hai loại bóng đèn cùng kích cỡ gồm: 70 bóng màu trắng với tỉ lệ bóng hỏng là 1\% và 30 bóng màu vàng với tỉ lệ hỏng là 2\%. Một khách hàng chọn mua ngẫu nhiên 1 bóng đèn từ cửa hàng này. Tính xác suất để người này mua được bóng đèn tốt?\\
+\textit{Giải.} 
+Gọi:
+\begin{itemize}
+    \item $B$: ``Khách chọn được bóng đèn tốt''.
+    \item $A_1$: ``Khách chọn được bóng đèn màu trắng'' $\implies P(A_1) = \dfrac{70}{70 + 30} = 0{,}7$.
+    \item $A_2$: ``Khách chọn được bóng đèn màu vàng'' $\implies P(A_2) = \dfrac{30}{70 + 30} = 0{,}3$.
+\end{itemize}
+Họ $\{A_1, A_2\}$ là một hệ đầy đủ.\\
+Xác suất bóng tốt ứng với từng màu:
+$P(B|A_1) = 1 - 0{,}01 = 0{,}99$;\quad $P(B|A_2) = 1 - 0{,}02 = 0{,}98$.\\
+Theo công thức xác suất đầy đủ:
+\[
+P(B) = P(A_1) \cdot P(B|A_1) + P(A_2) \cdot P(B|A_2) = 0{,}7 \cdot 0{,}99 + 0{,}3 \cdot 0{,}98 = 0{,}693 + 0{,}294 = 0{,}987.
+\]
+\end{vidu}
+
+\begin{chuy}[\textbf{Sơ đồ cây giải nhanh cho câu hỏi trắc nghiệm}]
+\begin{itemize}
+    \item Nhánh 1: $P(\text{đèn tốt màu trắng}) = 0{,}7 \cdot 0{,}99 = 0{,}693$.
+    \item Nhánh 2: $P(\text{đèn tốt màu vàng}) = 0{,}3 \cdot 0{,}98 = 0{,}294$.
+\end{itemize}
+$P(\text{đèn tốt}) = \text{tổng xác suất của 2 nhánh} = 0{,}693 + 0{,}294 = 0{,}987$.
+\end{chuy}
+
+\begin{vidu}
+Chuồng thỏ I có 3 con thỏ trắng và 4 con thỏ đen; chuồng II có 5 thỏ trắng và 3 thỏ đen. Quan sát thấy có 1 con thỏ chạy từ chuồng I sang chuồng II, sau đó có 1 con thỏ chạy ra từ chuồng II. Tính xác suất để con thỏ chạy ra từ chuồng II là thỏ trắng?\\
+\textit{Giải.} Gọi:
+\begin{itemize}
+    \item $T$: ``Con thỏ chạy ra từ chuồng II là thỏ trắng''.
+    \item $T_1$: ``Con thỏ chạy từ chuồng I sang chuồng II là thỏ trắng'' $\implies P(T_1) = \dfrac{3}{7}$.
+    \item $\overline{T}_1$: ``Con thỏ chạy từ chuồng I sang chuồng II là thỏ đen'' $\implies P(\overline{T}_1) = \dfrac{4}{7}$.
+\end{itemize}
+Họ $\{T_1, \overline{T}_1\}$ là một hệ đầy đủ.
+\begin{itemize}
+    \item Nếu $T_1$ xảy ra, chuồng II có $5 + 1 = 6$ thỏ trắng và 3 thỏ đen (tổng 9 con): $P(T|T_1) = \dfrac{6}{9}$.
+    \item Nếu $\overline{T}_1$ xảy ra, chuồng II có 5 thỏ trắng và $3 + 1 = 4$ thỏ đen (tổng 9 con): $P(T|\overline{T}_1) = \dfrac{5}{9}$.
+\end{itemize}
+Theo công thức xác suất đầy đủ:
+\[
+P(T) = P(T_1) \cdot P(T|T_1) + P(\overline{T}_1) \cdot P(T|\overline{T}_1) = \frac{3}{7} \cdot \frac{6}{9} + \frac{4}{7} \cdot \frac{5}{9} = \frac{18 + 20}{63} = \frac{38}{63}.
+\]
+\end{vidu}
+
+\paragraph{b) Công thức Bayes}
+Xét họ $n$ biến cố $\{A_i\}_{i=1}^n$ là một hệ đầy đủ và $B$ là một biến cố bất kỳ trong phép thử với $P(B) > 0$. Khi đó, xác suất để biến cố $A_k$ xảy ra sau khi biết biến cố $B$ đã xảy ra là:
+\[
+P(A_k|B) = \frac{P(A_k \cap B)}{P(B)} = \frac{P(A_k) \cdot P(B|A_k)}{\displaystyle\sum_{i=1}^n P(A_i) \cdot P(B|A_i)}.
+\]
+
+\begin{vidu}
+Xét tiếp Ví dụ 3.6 (về bóng đèn). Giả sử khách hàng chọn mua được bóng đèn tốt. Tính xác suất để người này đã mua được bóng đèn màu vàng?\\
+\textit{Giải.} Đặt tên các biến cố như Ví dụ 3.6. Cần tính xác suất có điều kiện $P(A_2|B)$:\\
+Theo công thức Bayes:
+\[
+P(A_2|B) = \frac{P(A_2) \cdot P(B|A_2)}{P(B)} = \frac{0{,}3 \cdot 0{,}98}{0{,}987} = \frac{0{,}294}{0{,}987} = \frac{14}{47} \approx 0{,}2979.
+\]
+\textit{Quy tắc sơ đồ:} $P(\text{đèn vàng} \mid \text{tốt}) = \dfrac{\text{Nhánh 2}}{\text{Tổng 2 nhánh}} = \dfrac{0{,}294}{0{,}987} = \dfrac{14}{47}$.
+\end{vidu}
+
+\begin{chuy}[\textbf{Phân biệt các bài toán áp dụng công thức: Nhân -- Đầy đủ -- Bayes}]
+Trong một bài toán với hệ đầy đủ $\{A_1, A_2\}$ và biến cố kết quả $B$:
+\begin{enumerate}[label=\arabic*)]
+    \item Nếu bài toán yêu cầu tìm xác suất đồng thời $P(A_1 \cap B)$ hoặc $P(A_2 \cap B)$: Đây là bài toán áp dụng \textbf{công thức nhân} (tính riêng từng nhánh).
+    \item Nếu bài toán yêu cầu tìm xác suất của biến cố chung $P(B)$: Đây là bài toán áp dụng \textbf{công thức xác suất đầy đủ} (tổng xác suất của các nhánh).
+    \item Nếu bài toán yêu cầu tìm xác suất của biến cố nguyên nhân $A_k$ khi đã biết kết quả $B$ đã xảy ra $P(A_k|B)$: Đây là bài toán áp dụng \textbf{công thức Bayes} (tỉ số giữa nhánh tương ứng và tổng tất cả các nhánh).
+\end{enumerate}
+\end{chuy}
+
+\begin{vidu}
+Nhà máy X có 3 phân xưởng A, B, C tương ứng sản xuất ra 20\%, 30\% và 50\% tổng sản phẩm của nhà máy. Giả sử tỉ lệ sản phẩm hỏng do các phân xưởng A, B, C sản xuất lần lượt là 1\%, 2\% và 3\%. Chọn ngẫu nhiên 1 sản phẩm do nhà máy X sản xuất ra.
+\begin{enumerate}[label=\arabic*)]
+    \item Tính xác suất (tỉ lệ) sản phẩm này bị hỏng.
+    \item Tính xác suất sản phẩm này hỏng và do phân xưởng A sản xuất.
+    \item Biết rằng sản phẩm được chọn là hỏng, tính xác suất sản phẩm này do phân xưởng A sản xuất.
+\end{enumerate}
+\textit{Giải.} Gọi $H$: ``Sản phẩm được chọn bị hỏng''.\\
+Gọi $A, B, C$ lần lượt là biến cố sản phẩm do phân xưởng A, B, C sản xuất.\\
+Hệ $\{A, B, C\}$ là đầy đủ với: $P(A) = 0{,}2$; $P(B) = 0{,}3$; $P(C) = 0{,}5$.\\
+Xác suất hỏng theo từng phân xưởng: $P(H|A) = 0{,}01$; $P(H|B) = 0{,}02$; $P(H|C) = 0{,}03$.
+\begin{enumerate}[label=\arabic*)]
+    \item Theo công thức xác suất đầy đủ:
+    \begin{align*}
+    P(H) &= P(A) \cdot P(H|A) + P(B) \cdot P(H|B) + P(C) \cdot P(H|C) \\
+         &= 0{,}2 \cdot 0{,}01 + 0{,}3 \cdot 0{,}02 + 0{,}5 \cdot 0{,}03 = 0{,}002 + 0{,}006 + 0{,}015 = 0{,}023 = 2{,}3\%.
+    \end{align*}
+    \item Áp dụng công thức nhân xác suất:
+    \[
+    P(AH) = P(A) \cdot P(H|A) = 0{,}2 \cdot 0{,}01 = 0{,}002.
+    \]
+    \item Áp dụng công thức Bayes:
+    \[
+    P(A|H) = \frac{P(AH)}{P(H)} = \frac{0{,}002}{0{,}023} = \frac{2}{23} \approx 0{,}0870.
+    \]
+\end{enumerate}
+\end{vidu}
+
+\begin{vidu}
+Tỉ lệ ôtô tải, ôtô con và xe máy đi qua đường X có trạm bơm dầu là $5 : 2 : 13$. Xác suất để ôtô tải, ôtô con và xe máy đi qua đường này vào bơm dầu lần lượt là $0{,}1$; $0{,}2$ và $0{,}15$. Biết rằng có 1 xe đi qua đường X vào bơm dầu, tính xác suất để đó là ôtô con?\\
+\[
+\text{A. } \frac{11}{57}; \qquad \text{B. } \frac{10}{57}; \qquad \text{C. } \frac{8}{57}; \qquad \text{D. } \frac{7}{57}.
+\]
+\textit{Giải.} 
+Tổng số phần tỉ lệ: $5 + 2 + 13 = 20$.\\
+Gọi $A_1$: ``Xe là ô tô tải'' $\implies P(A_1) = \dfrac{5}{20} = 0{,}25$.\\
+Gọi $A_2$: ``Xe là ô tô con'' $\implies P(A_2) = \dfrac{2}{20} = 0{,}1$.\\
+Gọi $A_3$: ``Xe là xe máy'' $\implies P(A_3) = \dfrac{13}{20} = 0{,}65$.\\
+Hệ $\{A_1, A_2, A_3\}$ là một hệ đầy đủ.\\
+Gọi $D$: ``Xe vào trạm bơm dầu''. Theo đề bài:
+$P(D|A_1) = 0{,}1$; $P(D|A_2) = 0{,}2$; $P(D|A_3) = 0{,}15$.\\
+Xác suất để có một xe vào bơm dầu:
+\begin{align*}
+P(D) &= P(A_1)P(D|A_1) + P(A_2)P(D|A_2) + P(A_3)P(D|A_3) \\
+     &= 0{,}25 \cdot 0{,}1 + 0{,}1 \cdot 0{,}2 + 0{,}65 \cdot 0{,}15 \\
+     &= 0{,}025 + 0{,}02 + 0{,}0975 = 0{,}1425 = \frac{57}{400}.
+\end{align*}
+Áp dụng công thức Bayes, xác suất xe vào bơm dầu là ô tô con:
+\[
+P(A_2|D) = \frac{P(A_2)P(D|A_2)}{P(D)} = \frac{0{,}1 \cdot 0{,}2}{0{,}1425} = \frac{0{,}02}{0{,}1425} = \frac{8}{57} \implies \text{Chọn C.}
+\]
+\end{vidu}
+
+\subsubsection{Lược đồ Bernoulli (Dãy phép thử Bernoulli)}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Định nghĩa dãy phép thử Bernoulli:}
+    Dãy các phép thử lặp lại, độc lập với nhau, trong mỗi phép thử chỉ có 2 kết quả đối lập nhau: biến cố $A$ xảy ra (thành công) hoặc $\overline{A}$ xảy ra (thất bại), với xác suất xảy ra biến cố $A$ không đổi trong suốt quá trình thử và bằng $P(A) = p$ ($0 < p < 1$). Khi đó, dãy các phép thử này được gọi là \textbf{dãy phép thử Bernoulli}.
+    \item \textbf{Công thức Bernoulli:}
+    Xác suất để biến cố $A$ xuất hiện đúng $k$ lần trong $n$ phép thử Bernoulli độc lập là:
+    \[
+    P_n(k, p) = C_n^k p^k (1 - p)^{n - k} \qquad (k = 0, 1, 2, \dots, n).
+    \]
+\end{itemize}
+
+\begin{vidu}
+Tín hiệu thông tin được phát đi 3 lần độc lập nhau. Xác suất thu được mỗi lần là $0{,}4$.
+\begin{enumerate}[label=\alph*)]
+    \item Tìm xác suất để nguồn thu nhận được thông tin đúng 2 lần.
+    \item Tìm xác suất để nguồn thu nhận được thông tin đó.
+    \item Nếu muốn xác suất thu được tin ít nhất là 90\% thì phải phát đi ít nhất bao nhiêu lần?
+\end{enumerate}
+\textit{Giải.} Dãy phát tín hiệu là dãy phép thử Bernoulli với $p = 0{,}4$ và $q = 1 - p = 0{,}6$.
+\begin{enumerate}[label=\alph*)]
+    \item Xác suất để nguồn thu nhận được thông tin đúng 2 lần ($n = 3, k = 2$):
+    \[
+    P_3(2; 0{,}4) = C_3^2 (0{,}4)^2 (0{,}6)^{3 - 2} = 3 \cdot 0{,}16 \cdot 0{,}6 = 0{,}288.
+    \]
+    \item Biến cố nguồn thu nhận được thông tin là có ít nhất 1 lần thu được tin. Biến cố đối lập là cả 3 lần đều không thu được tin ($k = 0$):
+    \[
+    P = 1 - P_3(0; 0{,}4) = 1 - C_3^0 (0{,}4)^0 (0{,}6)^3 = 1 - (0{,}6)^3 = 1 - 0{,}216 = 0{,}784.
+    \]
+    \item Xác suất để nguồn thu nhận được thông tin khi phát $n$ lần là: $P = 1 - (0{,}6)^n$.\\
+    Để xác suất thu được tin không nhỏ hơn $90\% = 0{,}9$, ta cần:
+    \begin{align*}
+    1 - (0{,}6)^n \ge 0{,}9 &\iff (0{,}6)^n \le 0{,}1 \\
+                           &\iff n \ge \log_{0{,}6}(0{,}1) \approx 4{,}504.
+    \end{align*}
+    Vì số lần phát $n$ phải là một số nguyên dương, nên ta chọn giá trị nhỏ nhất là:
+    \[
+    n = 5.
+    \]
+    Vậy cần phải phát đi ít nhất 5 lần.
+\end{enumerate}
+\end{vidu}
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+\section{Bài tập vận dụng}
+
+\subsection{Danh sách đề bài}
+
+\paragraph{Câu 1.} Một cửa hàng có 30 máy tính, trong đó có 20 máy tính do công ty A sản xuất và 10 máy tính do công ty B sản xuất. Một khách hàng đến cửa hàng mua 3 máy tính. Giả sử khả năng được mua của mỗi máy là như nhau. Tính xác suất để khách hàng này mua được 2 máy của công ty A và 1 máy của công ty B.
+
+\paragraph{Câu 2.} Một hãng nước ngọt thăm dò thị hiếu người tiêu dùng về 2 loại nước giải khát A và B. Trong số 200 người được hỏi có 120 người thích loại A, 100 người thích loại B, 60 người thích cả hai loại A và B. Chọn ngẫu nhiên 1 người trong số được thăm dò. Tính xác suất người này:
+\begin{enumerate}[label=\arabic*.]
+    \item Thích ít nhất một loại nước giải khát trên.
+    \item Không thích loại nước nào cả.
+\end{enumerate}
+
+\paragraph{Câu 3.} Một hộp phấn có 10 viên trắng, 6 viên đỏ. Chọn ngẫu nhiên không hoàn lại 2 viên (mỗi lần lấy 1 viên).
+\begin{enumerate}[label=\arabic*.]
+    \item Tính xác suất viên thứ nhất màu trắng.
+    \item Tính xác suất viên thứ hai màu đỏ, biết rằng viên thứ nhất màu trắng.
+\end{enumerate}
+
+\paragraph{Câu 4.} Một lớp có 20 sinh viên, trong đó có 17 sinh viên giỏi toán; 8 sinh viên giỏi anh; trong đó có 5 sinh viên giỏi cả hai môn. Với giả thiết chọn được một sinh viên giỏi toán, tính xác suất để sinh viên đó cũng giỏi anh.
+
+\paragraph{Câu 5.} Tung 2 đồng xu cân đối và đồng chất. Gọi:
+\begin{itemize}
+    \item $A$: Biến cố đồng xu thứ nhất xuất hiện mặt ngửa.
+    \item $B$: Biến cố đồng xu thứ hai xuất hiện mặt ngửa.
+    \item $C$: Biến cố 2 đồng xu xuất hiện mặt giống nhau.
+\end{itemize}
+Xác định không gian mẫu và biểu diễn $A, B, C$ dưới dạng tập hợp. Từ đó tính $P(A), P(B), P(C)$ và chứng minh $A, B, C$ đôi một độc lập.
+
+\paragraph{Câu 6.} Có 2 lô hàng:
+\begin{itemize}
+    \item Lô 1 có 10 sản phẩm loại A, 5 sản phẩm loại B.
+    \item Lô 2 có 12 sản phẩm loại A, 8 sản phẩm loại B.
+\end{itemize}
+Chọn ngẫu nhiên từ mỗi lô một sản phẩm. Tính xác suất chọn được:
+\begin{enumerate}[label=\arabic*.]
+    \item Hai sản phẩm loại A.
+    \item Hai sản phẩm cùng loại.
+    \item Hai sản phẩm khác loại.
+\end{enumerate}
+
+\paragraph{Câu 7.} Một lô hàng gồm 20 sản phẩm trong đó có 2 phế phẩm. Người ta lần lượt lấy mỗi lần một sản phẩm để kiểm tra (không hoàn lại) cho đến khi phát hiện đủ 2 phế phẩm thì dừng lại.
+\begin{enumerate}[label=\alph*/]
+    \item Tính xác suất để việc kiểm tra dừng lại ở lần thứ hai.
+    \item Tính xác suất để việc kiểm tra dừng lại ở lần thứ ba.
+\end{enumerate}
+
+\paragraph{Câu 8.} Bắn 3 viên đạn độc lập vào một bia. Xác suất trúng bia của mỗi viên đạn lần lượt là $0{,}6$; $0{,}9$; $0{,}7$. Tính xác suất:
+\begin{enumerate}[label=\alph*/]
+    \item Cả ba viên đều trúng bia.
+    \item Không viên nào trúng bia.
+    \item Có đúng một viên trúng bia.
+    \item Có ít nhất 1 viên trúng bia.
+\end{enumerate}
+
+\paragraph{Câu 9.} Hộp thứ nhất chứa 3 bi đỏ và 2 bi xanh; hộp thứ hai chứa 2 bi đỏ và 8 bi xanh. Chọn ngẫu nhiên một hộp và từ hộp đó chọn ngẫu nhiên một viên bi.
+\begin{enumerate}[label=\arabic*.]
+    \item Tìm xác suất chọn được bi đỏ.
+    \item Giả sử đã chọn được bi đỏ. Tính xác suất để bi đỏ này là của hộp thứ nhất.
+\end{enumerate}
+
+\paragraph{Câu 10.} Một bác sĩ chữa khỏi bệnh D cho một người với xác suất là 95\%. Giả sử có 10 người bị bệnh D đến bác sĩ này chữa bệnh, tính xác suất:
+\begin{enumerate}[label=\alph*)]
+    \item Có 8 người khỏi bệnh.
+    \item Có nhiều nhất 9 người khỏi bệnh.
+\end{enumerate}
+
+\paragraph{Câu 11.} Xét việc gieo một con súc sắc cân đối và đồng chất. Hãy tính xem cần gieo bao nhiêu lần thì xác suất được ít nhất 1 lần xuất hiện mặt sáu chấm không nhỏ hơn $0{,}9$.
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+\subsection{Hướng dẫn giải chi tiết}
+
+\subsubsection*{Lời giải Câu 1}
+Không gian mẫu là số cách chọn ngẫu nhiên 3 máy tính từ tổng số 30 máy tính:
+\[
+n(\Omega) = C_{30}^3 = \frac{30 \cdot 29 \cdot 28}{3 \cdot 2 \cdot 1} = 4060.
+\]
+Số cách chọn 2 máy của công ty A (trong 20 máy) và 1 máy của công ty B (trong 10 máy) là:
+\[
+k = C_{20}^2 \cdot C_{10}^1 = \frac{20 \cdot 19}{2} \cdot 10 = 190 \cdot 10 = 1900.
+\]
+Xác suất cần tìm:
+\[
+P = \frac{C_{20}^2 \cdot C_{10}^1}{C_{30}^3} = \frac{1900}{4060} = \frac{95}{203} \approx 0{,}4680.
+\]
+
+\subsubsection*{Lời giải Câu 2}
+Tổng số người được điều tra là $N = 200$.
+Gọi $A$ là biến cố người được chọn thích loại A $\implies n(A) = 120 \implies P(A) = \dfrac{120}{200} = 0{,}6$.\\
+Gọi $B$ là biến cố người được chọn thích loại B $\implies n(B) = 100 \implies P(B) = \dfrac{100}{200} = 0{,}5$.\\
+Biến cố thích cả hai loại là $A \cap B$ với $n(AB) = 60 \implies P(AB) = \dfrac{60}{200} = 0{,}3$.
+\begin{enumerate}[label=\arabic*.]
+    \item Xác suất người này thích ít nhất một loại nước:
+    \[
+    P(A \cup B) = P(A) + P(B) - P(AB) = 0{,}6 + 0{,}5 - 0{,}3 = 0{,}8.
+    \]
+    \item Người không thích loại nào cả là biến cố đối lập của biến cố thích ít nhất một loại:
+    \[
+    P(\overline{A \cup B}) = 1 - P(A \cup B) = 1 - 0{,}8 = 0{,}2.
+    \]
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 3}
+Tổng số viên phấn trong hộp là $10 + 6 = 16$ viên.
+\begin{enumerate}[label=\arabic*.]
+    \item Gọi $T_1$ là biến cố viên thứ nhất màu trắng. Xác suất là:
+    \[
+    P(T_1) = \frac{10}{16} = \frac{5}{8} = 0{,}625.
+    \]
+    \item Khi viên thứ nhất màu trắng đã được lấy ra và không hoàn lại, hộp còn lại $15$ viên phấn, trong đó có $9$ viên trắng và $6$ viên đỏ.
+    Xác suất để viên thứ hai màu đỏ khi biết viên thứ nhất màu trắng là:
+    \[
+    P(D_2|T_1) = \frac{6}{15} = \frac{2}{5} = 0{,}4.
+    \]
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 4}
+Tổng số sinh viên là $n = 20$.
+Gọi $T$ là biến cố sinh viên giỏi toán ($n(T) = 17$); $A$ là biến cố sinh viên giỏi anh ($n(A) = 8$).
+Số sinh viên giỏi cả hai môn là $n(TA) = 5$.\\
+Xác suất chọn được sinh viên giỏi anh với giả thiết sinh viên đó giỏi toán là xác suất có điều kiện:
+\[
+P(A|T) = \frac{n(TA)}{n(T)} = \frac{5}{17} \approx 0{,}2941.
+\]
+(Hoặc tính theo công thức: $P(A|T) = \dfrac{P(TA)}{P(T)} = \dfrac{5/20}{17/20} = \dfrac{5}{17}$).
+
+\subsubsection*{Lời giải Câu 5}
+Ký hiệu N là mặt ngửa, S là mặt sấp.
+\begin{itemize}
+    \item Không gian mẫu của phép thử gieo 2 đồng xu là:
+    \[
+    \Omega = \{\text{NN},\ \text{NS},\ \text{SN},\ \text{SS}\}, \qquad n(\Omega) = 4.
+    \]
+    Các biến cố sơ cấp là đồng khả năng với xác suất mỗi biến cố là $\dfrac{1}{4}$.
+    \item Biểu diễn các biến cố dưới dạng tập hợp:
+    \begin{itemize}
+        \item $A = \{\text{NN},\ \text{NS}\} \implies P(A) = \dfrac{2}{4} = \dfrac{1}{2}$.
+        \item $B = \{\text{NN},\ \text{SN}\} \implies P(B) = \dfrac{2}{4} = \dfrac{1}{2}$.
+        \item $C = \{\text{NN},\ \text{SS}\} \implies P(C) = \dfrac{2}{4} = \dfrac{1}{2}$.
+    \end{itemize}
+    \item Xét tích của từng cặp biến cố:
+    \begin{itemize}
+        \item $A \cap B = \{\text{NN}\} \implies P(AB) = \dfrac{1}{4} = \dfrac{1}{2} \cdot \dfrac{1}{2} = P(A) \cdot P(B) \implies A, B$ độc lập.
+        \item $A \cap C = \{\text{NN}\} \implies P(AC) = \dfrac{1}{4} = \dfrac{1}{2} \cdot \dfrac{1}{2} = P(A) \cdot P(C) \implies A, C$ độc lập.
+        \item $B \cap C = \{\text{NN}\} \implies P(BC) = \dfrac{1}{4} = \dfrac{1}{2} \cdot \dfrac{1}{2} = P(B) \cdot P(C) \implies B, C$ độc lập.
+    \end{itemize}
+    Vậy $A, B, C$ đôi một độc lập với nhau.
+\end{itemize}
+
+\subsubsection*{Lời giải Câu 6}
+Lô 1 có: 10 sản phẩm loại A, 5 sản phẩm loại B (tổng 15 sản phẩm).\\
+Lô 2 có: 12 sản phẩm loại A, 8 sản phẩm loại B (tổng 20 sản phẩm).\\
+Việc chọn sản phẩm từ hai lô là độc lập nhau.
+Gọi $A_1, B_1$ lần lượt là biến cố lấy được sản phẩm loại A, B từ lô 1:
+\[
+P(A_1) = \frac{10}{15} = \frac{2}{3}, \qquad P(B_1) = \frac{5}{15} = \frac{1}{3}.
+\]
+Gọi $A_2, B_2$ lần lượt là biến cố lấy được sản phẩm loại A, B từ lô 2:
+\[
+P(A_2) = \frac{12}{20} = \frac{3}{5}, \qquad P(B_2) = \frac{8}{20} = \frac{2}{5}.
+\]
+\begin{enumerate}[label=\arabic*.]
+    \item Xác suất được hai sản phẩm loại A:
+    \[
+    P(A_1 A_2) = P(A_1) \cdot P(A_2) = \frac{2}{3} \cdot \frac{3}{5} = \frac{2}{5} = 0{,}4.
+    \]
+    \item Hai sản phẩm cùng loại khi cả hai cùng là loại A hoặc cả hai cùng là loại B:
+    \[
+    P(\text{cùng loại}) = P(A_1 A_2) + P(B_1 B_2) = \frac{2}{3} \cdot \frac{3}{5} + \frac{1}{3} \cdot \frac{2}{5} = \frac{6}{15} + \frac{2}{15} = \frac{8}{15} \approx 0{,}5333.
+    \]
+    \item Hai sản phẩm khác loại là biến cố đối lập của biến cố hai sản phẩm cùng loại:
+    \[
+    P(\text{khác loại}) = 1 - P(\text{cùng loại}) = 1 - \frac{8}{15} = \frac{7}{15} \approx 0{,}4667.
+    \]
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 7}
+Lô hàng có 20 sản phẩm gồm 2 phế phẩm và 18 chính phẩm.
+\begin{enumerate}[label=\alph*/]
+    \item Quá trình kiểm tra dừng lại ở lần thứ hai khi và chỉ khi cả 2 lần đầu đều rút phải phế phẩm:
+    \[
+    P(\text{dừng lần 2}) = \frac{2}{20} \cdot \frac{1}{19} = \frac{1}{190} \approx 0{,}00526.
+    \]
+    \item Quá trình kiểm tra dừng lại ở lần thứ ba khi và chỉ khi trong 2 lần rút đầu tiên có đúng 1 phế phẩm và 1 chính phẩm, và lần rút thứ ba phải là phế phẩm còn lại (gồm 2 chuỗi kết quả xung khắc: Phế -- Chính -- Phế hoặc Chính -- Phế -- Phế):
+    \begin{align*}
+    P(\text{dừng lần 3}) &= \left(\frac{2}{20} \cdot \frac{18}{19} \cdot \frac{1}{18}\right) + \left(\frac{18}{20} \cdot \frac{2}{19} \cdot \frac{1}{18}\right) \\
+                        &= \frac{1}{190} + \frac{1}{190} = \frac{2}{190} = \frac{1}{95} \approx 0{,}01053.
+    \end{align*}
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 8}
+Gọi $A_i$ là biến cố viên đạn thứ $i$ bắn trúng bia ($i = 1, 2, 3$).
+Theo giả thiết:
+\[
+P(A_1) = 0{,}6 \implies P(\overline{A}_1) = 0{,}4; \quad
+P(A_2) = 0{,}9 \implies P(\overline{A}_2) = 0{,}1; \quad
+P(A_3) = 0{,}7 \implies P(\overline{A}_3) = 0{,}3.
+\]
+Các biến cố $A_1, A_2, A_3$ độc lập với nhau.
+\begin{enumerate}[label=\alph*/]
+    \item Xác suất cả ba viên đều trúng bia:
+    \[
+    P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2) \cdot P(A_3) = 0{,}6 \cdot 0{,}9 \cdot 0{,}7 = 0{,}378.
+    \]
+    \item Xác suất không viên nào trúng bia:
+    \[
+    P(\overline{A}_1 \overline{A}_2 \overline{A}_3) = P(\overline{A}_1) \cdot P(\overline{A}_2) \cdot P(\overline{A}_3) = 0{,}4 \cdot 0{,}1 \cdot 0{,}3 = 0{,}012.
+    \]
+    \item Xác suất có đúng một viên trúng bia:
+    \begin{align*}
+    P &= P(A_1 \overline{A}_2 \overline{A}_3) + P(\overline{A}_1 A_2 \overline{A}_3) + P(\overline{A}_1 \overline{A}_2 A_3) \\
+      &= 0{,}6 \cdot 0{,}1 \cdot 0{,}3 + 0{,}4 \cdot 0{,}9 \cdot 0{,}3 + 0{,}4 \cdot 0{,}1 \cdot 0{,}7 \\
+      &= 0{,}018 + 0{,}108 + 0{,}028 = 0{,}154.
+    \end{align*}
+    \item Xác suất có ít nhất 1 viên trúng bia:
+    \[
+    P = 1 - P(\overline{A}_1 \overline{A}_2 \overline{A}_3) = 1 - 0{,}012 = 0{,}988.
+    \]
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 9}
+Gọi $H_1, H_2$ lần lượt là biến cố chọn được hộp thứ nhất, hộp thứ hai.\\
+Vì việc chọn hộp là ngẫu nhiên nên: $P(H_1) = P(H_2) = \dfrac{1}{2}$.\\
+Hệ $\{H_1, H_2\}$ là một hệ đầy đủ.\\
+Gọi $D$ là biến cố chọn được viên bi màu đỏ.
+\begin{itemize}
+    \item Hộp 1 có 3 đỏ, 2 xanh (tổng 5 viên) $\implies P(D|H_1) = \dfrac{3}{5} = 0{,}6$.
+    \item Hộp 2 có 2 đỏ, 8 xanh (tổng 10 viên) $\implies P(D|H_2) = \dfrac{2}{10} = 0{,}2$.
+\end{itemize}
+\begin{enumerate}[label=\arabic*.]
+    \item Theo công thức xác suất đầy đủ, xác suất chọn được bi đỏ là:
+    \[
+    P(D) = P(H_1) \cdot P(D|H_1) + P(H_2) \cdot P(D|H_2) = \frac{1}{2} \cdot 0{,}6 + \frac{1}{2} \cdot 0{,}2 = 0{,}3 + 0{,}1 = 0{,}4.
+    \]
+    \item Áp dụng công thức Bayes, xác suất viên bi đỏ lấy được thuộc về hộp thứ nhất là:
+    \[
+    P(H_1|D) = \frac{P(H_1) \cdot P(D|H_1)}{P(D)} = \frac{0{,}3}{0{,}4} = \frac{3}{4} = 0{,}75.
+    \]
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 10}
+Quá trình chữa bệnh cho 10 người là một dãy 10 phép thử Bernoulli độc lập với xác suất chữa khỏi cho mỗi người là $p = 0{,}95$ và xác suất không khỏi là $q = 1 - p = 0{,}05$.
+\begin{enumerate}[label=\alph*)]
+    \item Xác suất có đúng 8 người khỏi bệnh ($n = 10, k = 8$):
+    \[
+    P_{10}(8) = C_{10}^8 p^8 q^2 = 45 \cdot (0{,}95)^8 \cdot (0{,}05)^2 \approx 45 \cdot 0{,}66342 \cdot 0{,}0025 \approx 0{,}0746 = 7{,}46\%.
+    \]
+    \item Biến cố đối lập của biến cố ``Có nhiều nhất 9 người khỏi bệnh'' là biến cố ``Cả 10 người đều khỏi bệnh'':
+    \[
+    P_{10}(10) = C_{10}^{10} (0{,}95)^{10} (0{,}05)^0 = (0{,}95)^{10} \approx 0{,}5987.
+    \]
+    Vậy xác suất có nhiều nhất 9 người khỏi bệnh là:
+    \[
+    P = 1 - P_{10}(10) = 1 - (0{,}95)^{10} \approx 1 - 0{,}5987 = 0{,}4013 = 40{,}13\%.
+    \]
+\end{enumerate}
+
+\subsubsection*{Lời giải Câu 11}
+Khi gieo một con súc sắc cân đối và đồng chất một lần, xác suất xuất hiện mặt sáu chấm là $p = \dfrac{1}{6}$, và xác suất không xuất hiện mặt sáu chấm là $q = 1 - p = \dfrac{5}{6}$.\\
+Khi gieo $n$ lần độc lập, xác suất để mặt sáu chấm không xuất hiện lần nào trong cả $n$ lần là $\left(\dfrac{5}{6}\right)^n$.\\
+Do đó, xác suất để có ít nhất 1 lần xuất hiện mặt sáu chấm là:
+\[
+P = 1 - \left(\frac{5}{6}\right)^n.
+\]
+Theo yêu cầu đề bài:
+\[
+1 - \left(\frac{5}{6}\right)^n \ge 0{,}9 \iff \left(\frac{5}{6}\right)^n \le 0{,}1.
+\]
+Lấy logarit tự nhiên hai vế (lưu ý $\ln(5/6) < 0$ nên đổi chiều bất đẳng thức):
+\[
+n \cdot \ln\left(\frac{5}{6}\right) \le \ln(0{,}1) \iff n \ge \frac{\ln(0{,}1)}{\ln(5/6)} \approx \frac{-2{,}302585}{-0{,}182322} \approx 12{,}63.
+\]
+Vì số lần gieo $n$ phải là một số nguyên dương nên giá trị nhỏ nhất của $n$ là:
+\[
+n = 13.
+\]
+Vậy cần gieo con súc sắc ít nhất 13 lần thì xác suất có ít nhất một lần xuất hiện mặt sáu chấm không nhỏ hơn 0,9.
+
+\end{document}

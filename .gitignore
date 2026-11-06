@@ -1,0 +1,43 @@
+# ==== LaTeX: file trung gian khi biên dịch ====
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.idx
+*.ilg
+*.ind
+*.xdv
+*.dvi
+_minted*/
+*-blx.bib
+
+# Ghi chú: file .tex và .pdf luôn được lưu (không bỏ qua).
+
+# ==== Office: file khóa tạm khi đang mở docx/pptx ====
+~$*
+.~lock.*#
+
+# ==== Hệ điều hành ====
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier
+
+# ==== Editor / IDE ====
+.vscode/
+.idea/
+*.swp
+*~

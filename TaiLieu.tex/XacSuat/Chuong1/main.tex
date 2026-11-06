@@ -1,0 +1,39 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- GÓI TIẾNG VIỆT VÀ FONT TIMES NEW ROMAN ---
+\usepackage[utf8]{vietnam}
+\usepackage{mathptmx} % Font Times New Roman chuẩn trong LaTeX
+
+% --- CẤU HÌNH KHỔ GIẤY A4 VÀ CĂN LỀ ---
+\usepackage[a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+% --- TOÁN HỌC ---
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+% --- DANH SÁCH VÀ BẢNG BIỂU ---
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+% --- LIÊN KẾT VÀ ĐỊNH DẠNG ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% --- CẤU HÌNH MÔI TRƯỜNG ĐỊNH NGHĨA, VÍ DỤ ---
+\theoremstyle{definition}
+\newtheorem{dinhnghia}{Định nghĩa}[section]
+\newtheorem{vidu}{Ví dụ}[section]
+\newtheorem{chuy}{Chú ý}[section]
+\newtheorem{nhanxet}{Nhận xét}[section]
+\newtheorem{tinhchat}{Tính chất}[section]
+
+\begin{document}
+
+\input{Chuong1_body.tex}
+
+\end{document}

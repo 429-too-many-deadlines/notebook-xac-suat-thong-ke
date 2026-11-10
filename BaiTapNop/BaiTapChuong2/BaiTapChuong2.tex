@@ -36,35 +36,7 @@
 
 \vspace{0.5em}
 \hrule
-\vspace{1em}
-
-\noindent\textbf{Các công thức sử dụng (theo bài giảng Chương 2):}
-\begin{itemize}[leftmargin=1.5em]
-    \item \textbf{Biến ngẫu nhiên rời rạc:} Bảng phân phối xác suất gồm các giá trị $x_i$ và xác suất tương ứng $p_i = P(X = x_i)$ thỏa $\sum_i p_i = 1$.
-    \item \textbf{Biến ngẫu nhiên liên tục:} Hàm mật độ $f(x) \ge 0, \forall x \in \mathbb{R}$ thỏa $\displaystyle\int_{-\infty}^{+\infty} f(x)\,dx = 1$.
-    \item \textbf{Hàm phân phối xác suất:} $F(x) = P(X \le x), \forall x \in \mathbb{R}$.
-    \begin{itemize}
-        \item Rời rạc: $F(x) = \sum_{x_i \le x} p_i$.
-        \item Liên tục: $F(x) = \displaystyle\int_{-\infty}^x f(t)\,dt$ và $P(a < X \le b) = F(b) - F(a) = \displaystyle\int_a^b f(t)\,dt$.
-    \end{itemize}
-    \item \textbf{Kỳ vọng $E(X)$:}
-    \begin{itemize}
-        \item Rời rạc: $E(X) = \sum_i x_i p_i$.
-        \item Liên tục: $E(X) = \displaystyle\int_{-\infty}^{+\infty} x f(x)\,dx$.
-        \item Tính chất: $E(C) = C$; $E(CX) = C \cdot E(X)$; $E(X \pm Y) = E(X) \pm E(Y)$; $E(XY) = E(X) \cdot E(Y)$ (nếu $X, Y$ độc lập).
-    \end{itemize}
-    \item \textbf{Phương sai $\operatorname{Var}(X)$ và độ lệch chuẩn $\sigma$:}
-    \begin{itemize}
-        \item Định nghĩa: $\operatorname{Var}(X) = E\left[(X - EX)^2\right] = E(X^2) - [E(X)]^2$.
-        \item Rời rạc: $E(X^2) = \sum_i x_i^2 p_i$; liên tục: $E(X^2) = \displaystyle\int_{-\infty}^{+\infty} x^2 f(x)\,dx$.
-        \item Độ lệch tiêu chuẩn: $\sigma = \sqrt{\operatorname{Var}(X)}$.
-    \end{itemize}
-    \item \textbf{Mode $\operatorname{Mod}(X)$:} Là giá trị tại đó xác suất đạt lớn nhất (đối với BNN rời rạc) hoặc hàm mật độ đạt cực đại toàn cục (đối với BNN liên tục).
-\end{itemize}
-
-\vspace{0.5em}
-\hrule
-\vspace{1em}
+\vspace{1.5em}
 
 %==================================================================
 \begin{cau}

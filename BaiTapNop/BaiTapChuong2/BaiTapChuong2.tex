@@ -1,0 +1,704 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- GÓI TIẾNG VIỆT VÀ FONT TIMES NEW ROMAN ---
+\usepackage[utf8]{vietnam}
+\usepackage{mathptmx}
+
+% --- KHỔ GIẤY VÀ CĂN LỀ ---
+\usepackage[a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+% --- TOÁN HỌC ---
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+% --- DANH SÁCH, BẢNG ---
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+% --- LIÊN KẾT ---
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+% --- MÔI TRƯỜNG ĐỀ BÀI ---
+\theoremstyle{definition}
+\newtheorem{cau}{Câu}
+
+\newcommand{\giai}{\noindent\textbf{\textit{Giải.}}\ }
+\newcommand{\dapso}[1]{\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\textbf{Đáp số:} #1}}}
+
+\begin{document}
+
+\begin{center}
+    {\large \textbf{PHẦN I. LÝ THUYẾT XÁC SUẤT}}\\[0.3em]
+    {\LARGE \textbf{BÀI TẬP CHƯƠNG 2. BIẾN NGẪU NHIÊN}}\\[0.8em]
+    {\normalsize Họ và tên: \dotfill\quad MSSV: \dotfill}
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+\noindent\textbf{Các công thức sử dụng (theo bài giảng Chương 2):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Biến ngẫu nhiên rời rạc:} Bảng phân phối xác suất gồm các giá trị $x_i$ và xác suất tương ứng $p_i = P(X = x_i)$ thỏa $\sum_i p_i = 1$.
+    \item \textbf{Biến ngẫu nhiên liên tục:} Hàm mật độ $f(x) \ge 0, \forall x \in \mathbb{R}$ thỏa $\displaystyle\int_{-\infty}^{+\infty} f(x)\,dx = 1$.
+    \item \textbf{Hàm phân phối xác suất:} $F(x) = P(X \le x), \forall x \in \mathbb{R}$.
+    \begin{itemize}
+        \item Rời rạc: $F(x) = \sum_{x_i \le x} p_i$.
+        \item Liên tục: $F(x) = \displaystyle\int_{-\infty}^x f(t)\,dt$ và $P(a < X \le b) = F(b) - F(a) = \displaystyle\int_a^b f(t)\,dt$.
+    \end{itemize}
+    \item \textbf{Kỳ vọng $E(X)$:}
+    \begin{itemize}
+        \item Rời rạc: $E(X) = \sum_i x_i p_i$.
+        \item Liên tục: $E(X) = \displaystyle\int_{-\infty}^{+\infty} x f(x)\,dx$.
+        \item Tính chất: $E(C) = C$; $E(CX) = C \cdot E(X)$; $E(X \pm Y) = E(X) \pm E(Y)$; $E(XY) = E(X) \cdot E(Y)$ (nếu $X, Y$ độc lập).
+    \end{itemize}
+    \item \textbf{Phương sai $\operatorname{Var}(X)$ và độ lệch chuẩn $\sigma$:}
+    \begin{itemize}
+        \item Định nghĩa: $\operatorname{Var}(X) = E\left[(X - EX)^2\right] = E(X^2) - [E(X)]^2$.
+        \item Rời rạc: $E(X^2) = \sum_i x_i^2 p_i$; liên tục: $E(X^2) = \displaystyle\int_{-\infty}^{+\infty} x^2 f(x)\,dx$.
+        \item Độ lệch tiêu chuẩn: $\sigma = \sqrt{\operatorname{Var}(X)}$.
+    \end{itemize}
+    \item \textbf{Mode $\operatorname{Mod}(X)$:} Là giá trị tại đó xác suất đạt lớn nhất (đối với BNN rời rạc) hoặc hàm mật độ đạt cực đại toàn cục (đối với BNN liên tục).
+\end{itemize}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+%==================================================================
+\begin{cau}
+Một xạ thủ có 4 viên đạn, bắn lần lượt từng viên vào một mục tiêu một cách độc lập. Xác suất trúng mục tiêu ở mỗi lần bắn là $0{,}8$. Biết rằng, nếu có 1 viên trúng mục tiêu hoặc hết đạn thì dừng. Gọi $X$ là số viên đạn xạ thủ đã bắn, hãy lập bảng phân phối xác suất của $X$?
+\end{cau}
+
+\giai
+Gọi $A_i$ là biến cố: ``Xạ thủ bắn trúng mục tiêu ở lần thứ $i$'' ($i = 1, 2, 3, 4$).
+
+Theo giả thiết, các lần bắn là độc lập và xác suất trúng mục tiêu ở mỗi lần bắn là:
+\[
+P(A_i) = 0{,}8 \implies P(\overline{A_i}) = 1 - 0{,}8 = 0{,}2 \quad (i = 1, 2, 3, 4).
+\]
+
+Xạ thủ có tối đa 4 viên đạn và dừng lại ngay khi có 1 viên trúng mục tiêu hoặc khi đã bắn hết 4 viên. Do đó, số viên đạn xạ thủ đã bắn $X$ nhận các giá trị thuộc tập $\{1, 2, 3, 4\}$.
+
+Ta tính xác suất tương ứng với từng giá trị của $X$:
+\begin{itemize}
+    \item $X = 1$: Xạ thủ bắn 1 viên và dừng lại, nghĩa là viên đạn thứ nhất trúng mục tiêu:
+    \[
+    P(X = 1) = P(A_1) = 0{,}8.
+    \]
+    \item $X = 2$: Viên thứ nhất trượt, viên thứ hai trúng mục tiêu (dừng bắn):
+    \[
+    P(X = 2) = P(\overline{A_1} A_2) = P(\overline{A_1})\,P(A_2) = 0{,}2 \times 0{,}8 = 0{,}16.
+    \]
+    \item $X = 3$: Hai viên đầu trượt, viên thứ ba trúng mục tiêu (dừng bắn):
+    \[
+    P(X = 3) = P(\overline{A_1}\,\overline{A_2} A_3) = P(\overline{A_1})\,P(\overline{A_2})\,P(A_3) = 0{,}2 \times 0{,}2 \times 0{,}8 = 0{,}032.
+    \]
+    \item $X = 4$: Ba viên đầu đều trượt. Khi đó xạ thủ buộc phải bắn đến viên thứ 4; dù viên thứ 4 trúng hay trượt thì xạ thủ cũng dừng lại do đã hết 4 viên đạn:
+    \[
+    P(X = 4) = P(\overline{A_1}\,\overline{A_2}\,\overline{A_3}) = P(\overline{A_1})\,P(\overline{A_2})\,P(\overline{A_3}) = (0{,}2)^3 = 0{,}008.
+    \]
+    \textit{(Cách khác: $P(X = 4) = P(\overline{A_1}\,\overline{A_2}\,\overline{A_3} A_4) + P(\overline{A_1}\,\overline{A_2}\,\overline{A_3}\,\overline{A_4}) = 0{,}2^3 \times 0{,}8 + 0{,}2^4 = 0{,}0064 + 0{,}0016 = 0{,}008$).}
+\end{itemize}
+
+Kiểm tra tổng xác suất:
+\[
+\sum_{i=1}^4 P(X = i) = 0{,}8 + 0{,}16 + 0{,}032 + 0{,}008 = 1.
+\]
+
+Vậy bảng phân phối xác suất của $X$ là:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$X$ & $1$ & $2$ & $3$ & $4$ \\
+\hline
+$P$ & $0{,}8$ & $0{,}16$ & $0{,}032$ & $0{,}008$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\dapso{Bảng phân phối xác suất của $X$: $P(X=1) = 0{,}8$; $P(X=2) = 0{,}16$; $P(X=3) = 0{,}032$; $P(X=4) = 0{,}008$}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Cho BNN $X$ có hàm mật độ:
+\[
+f(x) = \begin{cases}
+\dfrac{3}{28} x^2, & x \in [-1; 3] \\
+0, & x \notin [-1; 3].
+\end{cases}
+\]
+Tìm hàm phân phối $F(x)$ của $X$?
+\end{cau}
+
+\giai
+Theo định nghĩa, hàm phân phối xác suất của biến ngẫu nhiên liên tục $X$ là:
+\[
+F(x) = P(X \le x) = \int_{-\infty}^x f(t)\,dt, \quad \forall x \in \mathbb{R}.
+\]
+
+Ta xét 3 trường hợp của $x$:
+\begin{itemize}
+    \item Khi $x < -1$: Trên khoảng $(-\infty, x]$, hàm mật độ $f(t) = 0$, do đó:
+    \[
+    F(x) = \int_{-\infty}^x 0\,dt = 0.
+    \]
+    \item Khi $-1 \le x \le 3$:
+    \[
+    F(x) = \int_{-\infty}^{-1} 0\,dt + \int_{-1}^x \frac{3}{28} t^2\,dt = 0 + \left. \frac{t^3}{28} \right|_{-1}^x = \frac{x^3 - (-1)^3}{28} = \frac{x^3 + 1}{28}.
+    \]
+    \item Khi $x > 3$:
+    \[
+    F(x) = \int_{-\infty}^{-1} 0\,dt + \int_{-1}^3 \frac{3}{28} t^2\,dt + \int_3^x 0\,dt = 0 + \left. \frac{t^3}{28} \right|_{-1}^3 + 0 = \frac{3^3 - (-1)^3}{28} = \frac{28}{28} = 1.
+    \]
+\end{itemize}
+
+Kết hợp lại, hàm phân phối xác suất $F(x)$ của biến ngẫu nhiên $X$ là:
+\[
+F(x) = \begin{cases}
+0 & \text{khi } x < -1, \\
+\dfrac{x^3 + 1}{28} & \text{khi } -1 \le x \le 3, \\
+1 & \text{khi } x > 3.
+\end{cases}
+\]
+
+\dapso{$F(x) = \begin{cases} 0 & \text{khi } x < -1 \\ \dfrac{x^3 + 1}{28} & \text{khi } -1 \le x \le 3 \\ 1 & \text{khi } x > 3 \end{cases}$}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Cho $X$ là ĐLNN liên tục với hàm mật độ:
+\[
+f(x) = \begin{cases}
+kx, & x \in [0, 1] \\
+0, & x \notin [0, 1].
+\end{cases}
+\]
+\begin{enumerate}[label=\arabic*)]
+    \item Xác định giá trị $k$.
+    \item Tìm hàm phân phối $F(x)$.
+    \item Tính các xác suất $P\left(X < \dfrac{1}{2}\right)$ và $P\left(\dfrac{1}{2} < X < \dfrac{3}{4}\right)$.
+\end{enumerate}
+\end{cau}
+
+\giai
+\begin{enumerate}[label=\arabic*)]
+    \item \textbf{Xác định giá trị $k$:}
+
+    Do $f(x)$ là hàm mật độ xác suất của biến ngẫu nhiên liên tục $X$, nên $f(x) \ge 0, \forall x \in \mathbb{R}$ và tích phân trên toàn trục số bằng 1:
+    \[
+    \int_{-\infty}^{+\infty} f(x)\,dx = 1 \iff \int_0^1 kx\,dx = 1 \iff \left. k \frac{x^2}{2} \right|_0^1 = 1 \iff \frac{k}{2} = 1 \iff k = 2.
+    \]
+    Với $k = 2$, ta có $f(x) = 2x \ge 0$ với mọi $x \in [0, 1]$, thỏa mãn điều kiện không âm.
+
+    Vậy $k = 2$, hàm mật độ của $X$ là:
+    \[
+    f(x) = \begin{cases}
+    2x, & x \in [0, 1] \\
+    0, & x \notin [0, 1].
+    \end{cases}
+    \]
+
+    \item \textbf{Tìm hàm phân phối $F(x)$:}
+
+    Theo định nghĩa: $F(x) = \displaystyle\int_{-\infty}^x f(t)\,dt$.
+    \begin{itemize}
+        \item Khi $x < 0$: $F(x) = \displaystyle\int_{-\infty}^x 0\,dt = 0$.
+        \item Khi $0 \le x \le 1$:
+        \[
+        F(x) = \int_{-\infty}^0 0\,dt + \int_0^x 2t\,dt = \left. t^2 \right|_0^x = x^2.
+        \]
+        \item Khi $x > 1$:
+        \[
+        F(x) = \int_0^1 2t\,dt + \int_1^x 0\,dt = 1 + 0 = 1.
+        \]
+    \end{itemize}
+    Vậy hàm phân phối xác suất của $X$ là:
+    \[
+    F(x) = \begin{cases}
+    0 & \text{khi } x < 0, \\
+    x^2 & \text{khi } 0 \le x \le 1, \\
+    1 & \text{khi } x > 1.
+    \end{cases}
+    \]
+
+    \item \textbf{Tính các xác suất:}
+    \begin{itemize}
+        \item Vì $X$ là biến ngẫu nhiên liên tục nên:
+        \[
+        P\left(X < \frac{1}{2}\right) = F\left(\frac{1}{2}\right) = \left(\frac{1}{2}\right)^2 = \frac{1}{4} = 0{,}25.
+        \]
+        \item Xác suất trên khoảng:
+        \[
+        P\left(\frac{1}{2} < X < \frac{3}{4}\right) = F\left(\frac{3}{4}\right) - F\left(\frac{1}{2}\right) = \left(\frac{3}{4}\right)^2 - \left(\frac{1}{2}\right)^2 = \frac{9}{16} - \frac{4}{16} = \frac{5}{16} = 0{,}3125.
+        \]
+        \textit{(Cách khác: tính trực tiếp qua tích phân hàm mật độ):}
+        \[
+        P\left(\frac{1}{2} < X < \frac{3}{4}\right) = \int_{1/2}^{3/4} 2x\,dx = \left. x^2 \right|_{1/2}^{3/4} = \left(\frac{3}{4}\right)^2 - \left(\frac{1}{2}\right)^2 = \frac{5}{16}.
+        \]
+    \end{itemize}
+\end{enumerate}
+
+\dapso{1) $k = 2$;\quad 2) $F(x) = \begin{cases} 0, & x < 0 \\ x^2, & 0 \le x \le 1 \\ 1, & x > 1 \end{cases}$;\quad 3) $P\left(X < \dfrac{1}{2}\right) = \dfrac{1}{4} = 0{,}25$,\ $P\left(\dfrac{1}{2} < X < \dfrac{3}{4}\right) = \dfrac{5}{16} = 0{,}3125$}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Một lô hàng gồm 10 sản phẩm tốt và 2 phế phẩm. Lấy ngẫu nhiên 4 sản phẩm từ lô hàng đó, gọi $X$ là số sản phẩm tốt trong 4 sản phẩm lấy ra. Tìm phân phối xác suất và tính kỳ vọng của $X$?
+\end{cau}
+
+\giai
+Tổng số sản phẩm trong lô hàng là $10 + 2 = 12$ sản phẩm.
+
+Lấy ngẫu nhiên không hoàn lại 4 sản phẩm từ 12 sản phẩm, số phần tử của không gian mẫu là:
+\[
+n = C_{12}^4 = \frac{12 \cdot 11 \cdot 10 \cdot 9}{4 \cdot 3 \cdot 2 \cdot 1} = 495.
+\]
+
+Gọi $X$ là số sản phẩm tốt trong 4 sản phẩm lấy ra.
+\begin{itemize}
+    \item Vì trong lô chỉ có 2 phế phẩm, nên số phế phẩm lấy ra tối đa là 2. Suy ra số sản phẩm tốt tối thiểu là $4 - 2 = 2$.
+    \item Vì trong lô có 10 sản phẩm tốt ($10 \ge 4$), nên số sản phẩm tốt lấy ra tối đa là 4.
+\end{itemize}
+Do đó, biến ngẫu nhiên $X$ nhận các giá trị thuộc tập $\{2, 3, 4\}$.
+
+Xác suất tương ứng với từng giá trị của $X$ được tính theo công thức xác suất cổ điển:
+\begin{itemize}
+    \item Với $X = 2$ (lấy được 2 sản phẩm tốt và 2 phế phẩm):
+    \[
+    P(X = 2) = \frac{C_{10}^2 \cdot C_2^2}{C_{12}^4} = \frac{45 \cdot 1}{495} = \frac{45}{495} = \frac{1}{11}.
+    \]
+    \item Với $X = 3$ (lấy được 3 sản phẩm tốt và 1 phế phẩm):
+    \[
+    P(X = 3) = \frac{C_{10}^3 \cdot C_2^1}{C_{12}^4} = \frac{120 \cdot 2}{495} = \frac{240}{495} = \frac{16}{33}.
+    \]
+    \item Với $X = 4$ (lấy được 4 sản phẩm tốt và 0 phế phẩm):
+    \[
+    P(X = 4) = \frac{C_{10}^4 \cdot C_2^0}{C_{12}^4} = \frac{210 \cdot 1}{495} = \frac{210}{495} = \frac{14}{33}.
+    \]
+\end{itemize}
+
+Kiểm tra: $\dfrac{1}{11} + \dfrac{16}{33} + \dfrac{14}{33} = \dfrac{3 + 16 + 14}{33} = 1$.
+
+Bảng phân phối xác suất của $X$ là:
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$X$ & $2$ & $3$ & $4$ \\
+\hline
+$P$ & $\dfrac{1}{11}$ & $\dfrac{16}{33}$ & $\dfrac{14}{33}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Kỳ vọng của $X$ là:
+\[
+EX = \sum_i x_i P(X = x_i) = 2 \cdot \frac{1}{11} + 3 \cdot \frac{16}{33} + 4 \cdot \frac{14}{33} = \frac{2 \times 3 + 48 + 56}{33} = \frac{110}{33} = \frac{10}{3} \approx 3{,}3333.
+\]
+
+\dapso{Bảng phân phối: $P(X=2) = \dfrac{1}{11}$, $P(X=3) = \dfrac{16}{33}$, $P(X=4) = \dfrac{14}{33}$;\quad Kỳ vọng: $EX = \dfrac{10}{3} \approx 3{,}3333$}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Cho BNN $X$ có bảng phân phối xác suất:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$X$ & $1$ & $2$ & $4$ & $5$ & $7$ \\
+\hline
+$P$ & $a$ & $0{,}2$ & $b$ & $0{,}2$ & $0{,}1$ \\
+\hline
+\end{tabular}
+\end{center}
+Tìm giá trị của tham số $a$ và $b$ để $EX = 3{,}5$?
+\end{cau}
+
+\giai
+Theo tính chất của bảng phân phối xác suất, tổng xác suất của tất cả các giá trị phải bằng 1:
+\[
+\sum_i p_i = 1 \iff a + 0{,}2 + b + 0{,}2 + 0{,}1 = 1 \iff a + b + 0{,}5 = 1 \iff a + b = 0{,}5 \quad (1).
+\]
+với điều kiện $a \ge 0, b \ge 0$.
+
+Theo công thức tính kỳ vọng của biến ngẫu nhiên rời rạc:
+\[
+EX = \sum_i x_i p_i = 1 \cdot a + 2 \cdot 0{,}2 + 4 \cdot b + 5 \cdot 0{,}2 + 7 \cdot 0{,}1 = a + 4b + 0{,}4 + 1{,}0 + 0{,}7 = a + 4b + 2{,}1.
+\]
+
+Theo giả thiết, $EX = 3{,}5$, suy ra:
+\[
+a + 4b + 2{,}1 = 3{,}5 \iff a + 4b = 1{,}4 \quad (2).
+\]
+
+Từ $(1)$ và $(2)$, ta có hệ phương trình:
+\[
+\begin{cases}
+a + b = 0{,}5 \\
+a + 4b = 1{,}4.
+\end{cases}
+\]
+
+Trừ vế với vế của phương trình thứ hai cho phương trình thứ nhất:
+\[
+(a + 4b) - (a + b) = 1{,}4 - 0{,}5 \iff 3b = 0{,}9 \iff b = 0{,}3.
+\]
+Thay $b = 0{,}3$ vào $(1)$:
+\[
+a = 0{,}5 - 0{,}3 = 0{,}2.
+\]
+
+Cả hai giá trị $a = 0{,}2$ và $b = 0{,}3$ đều thỏa mãn điều kiện là xác suất ($0 \le a, b \le 1$).
+
+\dapso{a = 0{,}2;\quad b = 0{,}3}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Ông $A$ tham gia một trò chơi đỏ, đen như sau: Trong một hộp có 4 bi đỏ và 6 bi đen. Mỗi lần ông $A$ lấy ra 1 bi: nếu là đỏ thì được thưởng 100 (ngàn đồng), nếu là đen thì bị mất 70 (ngàn đồng). Hỏi trung bình mỗi lần lấy bi ông $A$ nhận được bao nhiêu tiền?
+\end{cau}
+
+\giai
+Tổng số bi trong hộp là $4 + 6 = 10$ bi.
+
+Khả năng lấy mỗi viên bi là như nhau. Xác suất lấy được bi mỗi loại trong một lần rút là:
+\begin{itemize}
+    \item Xác suất lấy được bi đỏ: $P(\text{Đỏ}) = \dfrac{4}{10} = 0{,}4$.
+    \item Xác suất lấy được bi đen: $P(\text{Đen}) = \dfrac{6}{10} = 0{,}6$.
+\end{itemize}
+
+Gọi $X$ là số tiền ông $A$ nhận được trong mỗi lần lấy bi (đơn vị: ngàn đồng).
+\begin{itemize}
+    \item Nếu lấy được bi đỏ, ông $A$ được thưởng 100 ngàn đồng, tức $X = 100$ với xác suất $P(X = 100) = 0{,}4$.
+    \item Nếu lấy được bi đen, ông $A$ bị mất 70 ngàn đồng, tức $X = -70$ với xác suất $P(X = -70) = 0{,}6$.
+\end{itemize}
+
+Bảng phân phối xác suất của biến ngẫu nhiên $X$ là:
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+$X$ (ngàn đồng) & $100$ & $-70$ \\
+\hline
+$P$ & $0{,}4$ & $0{,}6$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Số tiền trung bình mỗi lần lấy bi mà ông $A$ nhận được chính là kỳ vọng $EX$:
+\[
+EX = 100 \cdot 0{,}4 + (-70) \cdot 0{,}6 = 40 - 42 = -2 \text{ (ngàn đồng)}.
+\]
+
+\textbf{Kết luận:} Trung bình mỗi lần lấy bi, ông $A$ nhận được $-2$ ngàn đồng, tức là bị lỗ $2$ ngàn đồng (hay $-2.000$ đồng).
+
+\dapso{-2 \text{ ngàn đồng (tức lỗ } 2.000\text{ đồng)}}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Người thợ chép tranh mỗi tuần chép hai bức tranh độc lập $A$ và $B$ với xác suất hỏng tương ứng là $0{,}03$ và $0{,}05$. Nếu thành công thì người thợ sẽ kiếm lời từ bức tranh $A$ là $1{,}3$ triệu đồng và $B$ là $0{,}9$ triệu đồng, nhưng nếu hỏng thì bị lỗ do bức tranh $A$ là $0{,}8$ triệu đồng và do $B$ là $0{,}6$ triệu đồng. Hỏi trung bình người thợ nhận được bao nhiêu tiền chép tranh mỗi tuần?
+\end{cau}
+
+\giai
+Gọi $X$ là tổng số tiền người thợ nhận được mỗi tuần (đơn vị: triệu đồng).
+
+Gọi $X_A, X_B$ lần lượt là số tiền người thợ nhận được từ bức tranh $A$ và bức tranh $B$ mỗi tuần (đơn vị: triệu đồng).
+Khi đó, tổng số tiền nhận được là:
+\[
+X = X_A + X_B.
+\]
+
+\begin{itemize}
+    \item \textbf{Đối với bức tranh $A$:}
+    \begin{itemize}
+        \item Nếu thành công (xác suất $1 - 0{,}03 = 0{,}97$): người thợ kiếm lời $1{,}3$ triệu đồng, tức $X_A = 1{,}3$.
+        \item Nếu hỏng (xác suất $0{,}03$): người thợ bị lỗ $0{,}8$ triệu đồng, tức $X_A = -0{,}8$.
+    \end{itemize}
+    Bảng phân phối xác suất của $X_A$:
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    $X_A$ & $1{,}3$ & $-0{,}8$ \\
+    \hline
+    $P$ & $0{,}97$ & $0{,}03$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    Kỳ vọng số tiền từ bức tranh $A$:
+    \[
+    E(X_A) = 1{,}3 \times 0{,}97 + (-0{,}8) \times 0{,}03 = 1{,}261 - 0{,}024 = 1{,}237 \text{ (triệu đồng)}.
+    \]
+
+    \item \textbf{Đối với bức tranh $B$:}
+    \begin{itemize}
+        \item Nếu thành công (xác suất $1 - 0{,}05 = 0{,}95$): người thợ kiếm lời $0{,}9$ triệu đồng, tức $X_B = 0{,}9$.
+        \item Nếu hỏng (xác suất $0{,}05$): người thợ bị lỗ $0{,}6$ triệu đồng, tức $X_B = -0{,}6$.
+    \end{itemize}
+    Bảng phân phối xác suất của $X_B$:
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    $X_B$ & $0{,}9$ & $-0{,}6$ \\
+    \hline
+    $P$ & $0{,}95$ & $0{,}05$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    Kỳ vọng số tiền từ bức tranh $B$:
+    \[
+    E(X_B) = 0{,}9 \times 0{,}95 + (-0{,}6) \times 0{,}05 = 0{,}855 - 0{,}030 = 0{,}825 \text{ (triệu đồng)}.
+    \]
+\end{itemize}
+
+Áp dụng tính chất tuyến tính của kỳ vọng toán học:
+\[
+EX = E(X_A + X_B) = E(X_A) + E(X_B) = 1{,}237 + 0{,}825 = 2{,}062 \text{ (triệu đồng)}.
+\]
+
+Đổi sang đồng: $2{,}062 \text{ triệu đồng} = 2.062.000\text{ đồng}$.
+
+\dapso{2{,}062 \text{ triệu đồng (tức } 2.062.000\text{ đồng)}}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Cho một kiện hàng có 6 sản phẩm loại 1, 4 sản phẩm loại 2. Chọn ngẫu nhiên có hoàn lại 2 sản phẩm từ kiện hàng này. Gọi $X$ là số sản phẩm loại 1 trong 2 sản phẩm được lấy ra.
+\begin{enumerate}[label=\arabic*)]
+    \item Tìm luật phân phối xác suất của $X$.
+    \item Tìm kỳ vọng $E(X)$.
+    \item Tìm phương sai $\operatorname{Var}(X)$.
+\end{enumerate}
+\end{cau}
+
+\giai
+Tổng số sản phẩm trong kiện hàng là $6 + 4 = 10$ sản phẩm.
+
+Vì việc chọn 2 sản phẩm là \textbf{có hoàn lại}:
+\begin{itemize}
+    \item Trong mỗi lần chọn, xác suất lấy được sản phẩm loại 1 là:
+    \[
+    p = \frac{6}{10} = 0{,}6.
+    \]
+    \item Xác suất lấy được sản phẩm loại 2 là:
+    \[
+    q = 1 - p = \frac{4}{10} = 0{,}4.
+    \]
+\end{itemize}
+Hai lần lấy là độc lập nhau, mỗi lần xác suất xuất hiện sản phẩm loại 1 không đổi ($p = 0{,}6$). Số sản phẩm loại 1 lấy ra $X$ nhận các giá trị thuộc tập $\{0, 1, 2\}$.
+
+\begin{enumerate}[label=\arabic*)]
+    \item \textbf{Luật phân phối xác suất của $X$:}
+
+    Áp dụng công thức Bernoulli (đã học ở Chương 1) cho dãy 2 phép thử độc lập với xác suất thành công $p = 0{,}6$:
+    \[
+    P(X = k) = C_2^k\, p^k (1-p)^{2-k}, \quad k \in \{0, 1, 2\}.
+    \]
+    \begin{itemize}
+        \item Với $k = 0$:
+        \[
+        P(X = 0) = C_2^0\, (0{,}6)^0\, (0{,}4)^2 = 1 \times 1 \times 0{,}16 = 0{,}16.
+        \]
+        \item Với $k = 1$:
+        \[
+        P(X = 1) = C_2^1\, (0{,}6)^1\, (0{,}4)^1 = 2 \times 0{,}6 \times 0{,}4 = 0{,}48.
+        \]
+        \item Với $k = 2$:
+        \[
+        P(X = 2) = C_2^2\, (0{,}6)^2\, (0{,}4)^0 = 1 \times 0{,}36 \times 1 = 0{,}36.
+        \]
+    \end{itemize}
+    Kiểm tra: $0{,}16 + 0{,}48 + 0{,}36 = 1$.
+
+    Bảng phân phối xác suất của $X$:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    $X$ & $0$ & $1$ & $2$ \\
+    \hline
+    $P$ & $0{,}16$ & $0{,}48$ & $0{,}36$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+
+    \item \textbf{Kỳ vọng $E(X)$:}
+
+    Theo định nghĩa kỳ vọng của biến ngẫu nhiên rời rạc:
+    \[
+    E(X) = \sum_i x_i p_i = 0 \times 0{,}16 + 1 \times 0{,}48 + 2 \times 0{,}36 = 0 + 0{,}48 + 0{,}72 = 1{,}2.
+    \]
+
+    \item \textbf{Phương sai $\operatorname{Var}(X)$:}
+
+    Ta tính $E(X^2)$:
+    \begin{align*}
+    E(X^2) &= \sum_i x_i^2 p_i = 0^2 \times 0{,}16 + 1^2 \times 0{,}48 + 2^2 \times 0{,}36 \\
+    &= 0 + 0{,}48 + 4 \times 0{,}36 = 0{,}48 + 1{,}44 = 1{,}92.
+    \end{align*}
+    Áp dụng công thức tính phương sai:
+    \[
+    \operatorname{Var}(X) = E(X^2) - [E(X)]^2 = 1{,}92 - (1{,}2)^2 = 1{,}92 - 1{,}44 = 0{,}48.
+    \]
+\end{enumerate}
+
+\dapso{1) Bảng phân phối: $P(X=0)=0{,}16$, $P(X=1)=0{,}48$, $P(X=2)=0{,}36$;\quad 2) $E(X) = 1{,}2$;\quad 3) $\operatorname{Var}(X) = 0{,}48$}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Một doanh nghiệp đầu tư phát triển một loại sản phẩm mới, xác suất thành công là $30\%$. Chi phí đầu tư bỏ ra là 100 nghìn USD. Nếu không thành công thì mất chi phí đầu tư mà không thu về được gì, nhưng nếu thành công thì thu về được 1 triệu USD (trước khi trừ đi chi phí đầu tư). Tính kỳ vọng lợi nhuận từ dự án đầu tư này.
+\end{cau}
+
+\giai
+Chọn đơn vị tiền tệ là nghìn USD ($1\text{ triệu USD} = 1000\text{ nghìn USD}$).
+
+Chi phí đầu tư ban đầu của doanh nghiệp là $100$ nghìn USD.
+
+Gọi $Y$ là lợi nhuận từ dự án đầu tư phát triển sản phẩm mới (đơn vị: nghìn USD).
+\begin{itemize}
+    \item Nếu dự án thành công (với xác suất $p = 30\% = 0{,}3$): Doanh nghiệp thu về 1 triệu USD ($= 1000$ nghìn USD). Sau khi trừ chi phí đầu tư, lợi nhuận thu được là:
+    \[
+    Y = 1000 - 100 = 900 \text{ (nghìn USD)}.
+    \]
+    \item Nếu dự án không thành công (với xác suất $1 - 0{,}3 = 0{,}7$): Doanh nghiệp không thu về được gì (doanh thu bằng 0) và mất toàn bộ chi phí đầu tư. Lợi nhuận thu được là:
+    \[
+    Y = 0 - 100 = -100 \text{ (nghìn USD)}.
+    \]
+\end{itemize}
+
+Bảng phân phối xác suất của lợi nhuận $Y$:
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+$Y$ (nghìn USD) & $900$ & $-100$ \\
+\hline
+$P$ & $0{,}3$ & $0{,}7$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Kỳ vọng lợi nhuận từ dự án đầu tư là:
+\[
+EY = 900 \times 0{,}3 + (-100) \times 0{,}7 = 270 - 70 = 200 \text{ (nghìn USD)}.
+\]
+
+Đổi sang USD: $200\text{ nghìn USD} = 200.000\text{ USD}$ (tương đương $0{,}2\text{ triệu USD}$).
+
+\dapso{200 \text{ nghìn USD (tức } 200.000\text{ USD)}}
+
+\vspace{1.5em}
+
+%==================================================================
+\begin{cau}
+Cho ĐLNN $X$ có hàm mật độ xác suất như sau:
+\[
+f(x) = \begin{cases}
+2e^{-2x}, & x \ge 0 \\
+0, & x < 0.
+\end{cases}
+\]
+Tìm các giá trị:
+\begin{enumerate}[label=\arabic*)]
+    \item Kỳ vọng $E(X)$.
+    \item Phương sai $\operatorname{Var}(X)$ và độ lệch chuẩn $\sigma$.
+    \item $\operatorname{Mod}(X)$.
+\end{enumerate}
+\end{cau}
+
+\giai
+\begin{enumerate}[label=\arabic*)]
+    \item \textbf{Kỳ vọng $E(X)$:}
+
+    Theo định nghĩa kỳ vọng của biến ngẫu nhiên liên tục:
+    \[
+    E(X) = \int_{-\infty}^{+\infty} x f(x)\,dx = \int_0^{+\infty} 2x e^{-2x}\,dx.
+    \]
+    Sử dụng phương pháp tích phân từng phần:
+    Đặt:
+    \[
+    \begin{cases}
+    u = x \implies du = dx \\
+    dv = 2e^{-2x}\,dx \implies v = -e^{-2x}.
+    \end{cases}
+    \]
+    Khi đó:
+    \[
+    E(X) = \left. -x e^{-2x} \right|_0^{+\infty} + \int_0^{+\infty} e^{-2x}\,dx.
+    \]
+    Do $\displaystyle\lim_{x \to +\infty} \frac{x}{e^{2x}} = 0$ (theo quy tắc L'Hôpital) và tại $x = 0$ ta có $-0 \cdot e^0 = 0$, phần thế cận bằng 0. Vậy:
+    \[
+    E(X) = 0 + \left. \left(-\frac{1}{2} e^{-2x}\right) \right|_0^{+\infty} = 0 - \left(-\frac{1}{2} e^0\right) = \frac{1}{2} = 0{,}5.
+    \]
+
+    \item \textbf{Phương sai $\operatorname{Var}(X)$ và độ lệch chuẩn $\sigma$:}
+
+    Trước hết ta tính $E(X^2)$:
+    \[
+    E(X^2) = \int_{-\infty}^{+\infty} x^2 f(x)\,dx = \int_0^{+\infty} 2x^2 e^{-2x}\,dx.
+    \]
+    Sử dụng phương pháp tích phân từng phần:
+    Đặt:
+    \[
+    \begin{cases}
+    u = x^2 \implies du = 2x\,dx \\
+    dv = 2e^{-2x}\,dx \implies v = -e^{-2x}.
+    \end{cases}
+    \]
+    Khi đó:
+    \[
+    E(X^2) = \left. -x^2 e^{-2x} \right|_0^{+\infty} + \int_0^{+\infty} 2x e^{-2x}\,dx.
+    \]
+    Vì $\displaystyle\lim_{x \to +\infty} \frac{x^2}{e^{2x}} = 0$, phần thế cận bằng 0. Nhận thấy tích phân còn lại chính là $E(X)$:
+    \[
+    E(X^2) = 0 + \int_0^{+\infty} 2x e^{-2x}\,dx = E(X) = \frac{1}{2}.
+    \]
+
+    Áp dụng công thức tính phương sai:
+    \[
+    \operatorname{Var}(X) = E(X^2) - [E(X)]^2 = \frac{1}{2} - \left(\frac{1}{2}\right)^2 = \frac{1}{2} - \frac{1}{4} = \frac{1}{4} = 0{,}25.
+    \]
+
+    Độ lệch chuẩn của $X$:
+    \[
+    \sigma = \sqrt{\operatorname{Var}(X)} = \sqrt{\frac{1}{4}} = \frac{1}{2} = 0{,}5.
+    \]
+
+    \item \textbf{Mode $\operatorname{Mod}(X)$:}
+
+    Theo định nghĩa, $\operatorname{Mod}(X)$ là điểm tại đó hàm mật độ xác suất $f(x)$ đạt cực đại toàn cục trên $\mathbb{R}$.
+    \begin{itemize}
+        \item Với $x < 0$: $f(x) = 0$.
+        \item Với $x \ge 0$: $f(x) = 2e^{-2x}$.
+    \end{itemize}
+    Đạo hàm của $f(x)$ trên $(0, +\infty)$ là:
+    \[
+    f'(x) = -4e^{-2x} < 0, \quad \forall x > 0.
+    \]
+    Do đó, hàm số $f(x)$ nghịch biến chặt trên $[0, +\infty)$.
+    Suy ra giá trị lớn nhất của $f(x)$ trên $[0, +\infty)$ đạt tại $x = 0$:
+    \[
+    f(0) = 2e^0 = 2.
+    \]
+    Vì $f(x) < 2$ với mọi $x > 0$ và $f(x) = 0 < 2$ với mọi $x < 0$, ta có:
+    \[
+    \max_{x \in \mathbb{R}} f(x) = f(0) = 2.
+    \]
+    Vậy hàm mật độ $f(x)$ đạt giá trị lớn nhất duy nhất tại $x = 0$.
+    Do đó:
+    \[
+    \operatorname{Mod}(X) = 0.
+    \]
+\end{enumerate}
+
+\dapso{1) $E(X) = \dfrac{1}{2} = 0{,}5$;\quad 2) $\operatorname{Var}(X) = \dfrac{1}{4} = 0{,}25$,\ $\sigma = \dfrac{1}{2} = 0{,}5$;\quad 3) $\operatorname{Mod}(X) = 0$}
+
+\end{document}

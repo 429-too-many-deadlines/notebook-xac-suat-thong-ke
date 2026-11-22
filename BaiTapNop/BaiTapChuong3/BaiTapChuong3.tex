@@ -1,0 +1,686 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- GÓI TIẾNG VIỆT VÀ FONT TIMES NEW ROMAN ---
+\usepackage[utf8]{vietnam}
+\usepackage{mathptmx}
+
+% --- KHỔ GIẤY VÀ CĂN LỀ ---
+\usepackage[a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+% --- TOÁN HỌC ---
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+% --- DANH SÁCH, BẢNG ---
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+% --- LIÊN KẾT ---
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+% --- MÔI TRƯỜNG ĐỀ BÀI VÀ LỜI GIẢI ---
+\theoremstyle{definition}
+\newtheorem{cau}{Câu}
+\newtheorem*{chuy}{Chú ý}
+
+\newcommand{\giai}{\noindent\textbf{\textit{Giải.}}\ }
+\newcommand{\dapso}[1]{\noindent\textbf{Đáp số:}\ #1}
+
+\begin{document}
+
+%==================================================================
+\begin{cau}
+Một máy tính có 20 thư mục, trong đó có 5 thư mục bị nhiễm virus. Chọn ngẫu nhiên 6 thư mục để kiểm tra xem có bị nhiễm virus hay không.
+\begin{enumerate}[label=\alph*)]
+    \item Tính xác suất có ít nhất 3 thư mục bị nhiễm virus.
+    \item Trung bình có bao nhiêu thư mục bị nhiễm trong 6 thư mục được chọn?
+\end{enumerate}
+\end{cau}
+
+\giai
+Tập hợp có tổng số thư mục là $N = 20$, trong đó có $N_A = 5$ thư mục bị nhiễm virus và $N - N_A = 15$ thư mục không bị nhiễm.
+
+Chọn ngẫu nhiên không hoàn lại $n = 6$ thư mục. Gọi $X$ là số thư mục bị nhiễm virus trong 6 thư mục được chọn. Khi đó $X$ tuân theo quy luật phân phối siêu bội:
+\[
+X \sim H(N, N_A, n) = H(20, 5, 6).
+\]
+Miền giá trị của $X$: $\max\{0; 6 - 15\} = 0 \le X \le \min\{6; 5\} = 5 \implies X \in \{0; 1; 2; 3; 4; 5\}$.
+
+Công thức xác suất của phân phối siêu bội:
+\[
+P(X = k) = \frac{C_5^k C_{15}^{6-k}}{C_{20}^6}, \quad k \in \{0; 1; 2; 3; 4; 5\}.
+\]
+Số cách chọn 6 thư mục từ 20 thư mục là: $C_{20}^6 = 38760$.
+
+\begin{enumerate}[label=\alph*)]
+    \item Xác suất có ít nhất 3 thư mục bị nhiễm virus là:
+    \[
+    P(X \ge 3) = P(X = 3) + P(X = 4) + P(X = 5).
+    \]
+    Ta tính từng xác suất thành phần:
+    \begin{align*}
+    P(X = 3) &= \frac{C_5^3 C_{15}^3}{C_{20}^6} = \frac{10 \times 455}{38760} = \frac{4550}{38760}, \\
+    P(X = 4) &= \frac{C_5^4 C_{15}^2}{C_{20}^6} = \frac{5 \times 105}{38760} = \frac{525}{38760}, \\
+    P(X = 5) &= \frac{C_5^5 C_{15}^1}{C_{20}^6} = \frac{1 \times 15}{38760} = \frac{15}{38760}.
+    \end{align*}
+    Do đó:
+    \[
+    P(X \ge 3) = \frac{4550 + 525 + 15}{38760} = \frac{5090}{38760} = \frac{509}{3876} \approx 0{,}1313 = 13{,}13\%.
+    \]
+
+    \item Số thư mục bị nhiễm trung bình trong 6 thư mục được chọn chính là kỳ vọng $EX$:
+    \[
+    EX = n \cdot p = n \cdot \frac{N_A}{N} = 6 \cdot \frac{5}{20} = 1{,}5\text{ (thư mục)}.
+    \]
+\end{enumerate}
+
+\dapso{a) $P(X \ge 3) = \dfrac{509}{3876} \approx 0{,}1313 = 13{,}13\%$; \quad b) $EX = 1{,}5$ thư mục.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Một kĩ thuật viên theo dõi 12 máy tự động. Xác suất để mỗi máy cần đến sự điều chỉnh của kĩ thuật viên trong mỗi ngày là $0{,}1$. Các máy này hoạt động độc lập nhau.
+\begin{enumerate}[label=\alph*)]
+    \item Gọi $X$ là số máy cần sự điều chỉnh mỗi ngày. Tìm phân phối xác suất của $X$.
+    \item Tìm xác suất mỗi ngày có ít nhất 1 máy cần điều chỉnh.
+\end{enumerate}
+\end{cau}
+
+\giai
+\begin{enumerate}[label=\alph*)]
+    \item Có $n = 12$ máy tự động hoạt động độc lập nhau. Mỗi máy trong một ngày chỉ có 2 khả năng đối lập: cần điều chỉnh (với xác suất $p = 0{,}1$) hoặc không cần điều chỉnh (với xác suất $q = 1 - p = 0{,}9$).
+
+    Biến ngẫu nhiên $X$ là số máy cần điều chỉnh trong 12 máy là số lần thành công trong dãy 12 phép thử Bernoulli độc lập. Do đó, $X$ có quy luật phân phối nhị thức:
+    \[
+    X \sim B(n, p) = B(12; 0{,}1).
+    \]
+    Miền giá trị của $X$: $X \in \{0; 1; 2; \dots; 12\}$.
+
+    Công thức xác suất của $X$:
+    \[
+    P(X = k) = C_{12}^k (0{,}1)^k (0{,}9)^{12 - k}, \quad k = 0, 1, 2, \dots, 12.
+    \]
+
+    \item Biến cố ``mỗi ngày có ít nhất 1 máy cần điều chỉnh'' là $\{X \ge 1\}$. Biến cố đối lập là $\{X = 0\}$ (không có máy nào cần điều chỉnh).
+
+    Xác suất không có máy nào cần điều chỉnh là:
+    \[
+    P(X = 0) = C_{12}^0 (0{,}1)^0 (0{,}9)^{12} = (0{,}9)^{12} \approx 0{,}2824.
+    \]
+    Suy ra xác suất mỗi ngày có ít nhất 1 máy cần điều chỉnh là:
+    \[
+    P(X \ge 1) = 1 - P(X = 0) = 1 - (0{,}9)^{12} \approx 1 - 0{,}2824 = 0{,}7176 = 71{,}76\%.
+    \]
+\end{enumerate}
+
+\dapso{a) $X \sim B(12; 0{,}1)$, \ $P(X = k) = C_{12}^k (0{,}1)^k (0{,}9)^{12-k}$; \quad b) $P(X \ge 1) \approx 0{,}7176 = 71{,}76\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Xác suất trúng mỗi tờ vé số là $0{,}001$.
+\begin{enumerate}[label=\alph*)]
+    \item Hỏi nếu mua 20 tờ vé số thì xác suất trúng 2 tờ là bao nhiêu?
+    \item Hỏi trung bình mua 20 tờ vé số thì trúng bao nhiêu tờ?
+\end{enumerate}
+\end{cau}
+
+\giai
+Gọi $X$ là số tờ vé số trúng thưởng trong 20 tờ được mua.
+
+Giả thiết các tờ vé số có kết quả độc lập nhau, mỗi tờ có xác suất trúng $p = 0{,}001$. Khi đó $X$ tuân theo phân phối nhị thức với $n = 20$ và $p = 0{,}001$:
+\[
+X \sim B(20; 0{,}001), \qquad q = 1 - p = 0{,}999.
+\]
+\begin{enumerate}[label=\alph*)]
+    \item Xác suất trúng đúng 2 tờ vé số là:
+    \begin{align*}
+    P(X = 2) &= C_{20}^2 p^2 q^{18} \\
+    &= C_{20}^2 (0{,}001)^2 (0{,}999)^{18} \\
+    &= \frac{20 \times 19}{2} \times 10^{-6} \times (0{,}999)^{18} \\
+    &= 190 \times 10^{-6} \times 0{,}982152 \\
+    &\approx 1{,}8661 \times 10^{-4} = 0{,}0001866 = 0{,}0187\%.
+    \end{align*}
+
+    \item Trung bình số tờ vé số trúng thưởng khi mua 20 tờ là kỳ vọng $EX$:
+    \[
+    EX = n \cdot p = 20 \times 0{,}001 = 0{,}02\text{ (tờ)}.
+    \]
+\end{enumerate}
+
+\dapso{a) $P(X = 2) \approx 1{,}8661 \times 10^{-4} = 0{,}0187\%$; \quad b) $EX = 0{,}02$ tờ.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Có một trò chơi điện tử được phát hành. $60\%$ người chơi hoàn thành được hết các level và có $30\%$ trong số đó sau đó mua phiên bản tiếp theo.
+\begin{enumerate}[label=\alph*)]
+    \item Hỏi trung bình trong 15 người chơi, có bao nhiêu người mua phiên bản tiếp theo?
+    \item Xác suất có ít nhất 2 người chơi sẽ mua phiên bản mới trong 15 người chơi?
+\end{enumerate}
+\end{cau}
+
+\giai
+Xét một người chơi được chọn ngẫu nhiên. Gọi:
+\begin{itemize}
+    \item $A$: ``Người chơi hoàn thành hết các level'' $\implies P(A) = 60\% = 0{,}6$.
+    \item $B$: ``Người chơi mua phiên bản tiếp theo''.
+\end{itemize}
+Theo đề bài, trong số những người hoàn thành các level, có $30\%$ mua phiên bản tiếp theo, nghĩa là:
+\[
+P(B|A) = 30\% = 0{,}3.
+\]
+Theo công thức nhân xác suất, xác suất một người chơi mua phiên bản tiếp theo là:
+\[
+p = P(AB) = P(A)\,P(B|A) = 0{,}6 \times 0{,}3 = 0{,}18.
+\]
+Xét nhóm gồm $n = 15$ người chơi độc lập. Gọi $X$ là số người mua phiên bản tiếp theo trong 15 người. Khi đó:
+\[
+X \sim B(n, p) = B(15; 0{,}18), \qquad q = 1 - p = 0{,}82.
+\]
+
+\begin{enumerate}[label=\alph*)]
+    \item Trung bình trong 15 người chơi có số người mua phiên bản tiếp theo là:
+    \[
+    EX = n \cdot p = 15 \times 0{,}18 = 2{,}7\text{ (người)}.
+    \]
+
+    \item Xác suất có ít nhất 2 người chơi mua phiên bản mới là $P(X \ge 2)$:
+    \[
+    P(X \ge 2) = 1 - P(X < 2) = 1 - [P(X = 0) + P(X = 1)].
+    \]
+    Ta có:
+    \begin{align*}
+    P(X = 0) &= C_{15}^0 (0{,}18)^0 (0{,}82)^{15} = (0{,}82)^{15} \approx 0{,}05096, \\
+    P(X = 1) &= C_{15}^1 (0{,}18)^1 (0{,}82)^{14} = 15 \times 0{,}18 \times (0{,}82)^{14} = 2{,}7 \times 0{,}062143 \approx 0{,}16779.
+    \end{align*}
+    Suy ra:
+    \[
+    P(X = 0) + P(X = 1) \approx 0{,}05096 + 0{,}16779 = 0{,}21875.
+    \]
+    Do đó:
+    \[
+    P(X \ge 2) = 1 - 0{,}21875 = 0{,}78125 \approx 0{,}7813 = 78{,}13\%.
+    \]
+\end{enumerate}
+
+\dapso{a) $EX = 2{,}7$ người; \quad b) $P(X \ge 2) \approx 0{,}7813 = 78{,}13\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Trung bình 5 phút có 15 người vào một đại lý bưu điện. Tính xác suất trong 1 phút có 4 người vào đại lý bưu điện đó. Biết rằng số người vào đại lý là một ĐLNN rời rạc có phân phối Poisson.
+\end{cau}
+
+\giai
+Gọi $X$ là số người vào đại lý bưu điện trong khoảng thời gian 1 phút.
+
+Theo giả thiết, số người vào đại lý tuân theo quy luật phân phối Poisson. Vì trung bình trong 5 phút có 15 người vào, nên trung bình trong 1 phút số người vào đại lý là:
+\[
+\lambda = \frac{15}{5} = 3\text{ (người/phút)}.
+\]
+Do đó, $X \sim P(\lambda) = P(3)$.
+
+Công thức xác suất của phân phối Poisson:
+\[
+P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!} = \frac{3^k e^{-3}}{k!}, \quad k = 0, 1, 2, \dots
+\]
+Xác suất trong 1 phút có đúng 4 người vào đại lý bưu điện là:
+\[
+P(X = 4) = \frac{3^4 e^{-3}}{4!} = \frac{81 e^{-3}}{24} = \frac{27}{8} e^{-3} = 3{,}375\,e^{-3}.
+\]
+Thay $e^{-3} \approx 0{,}049787$, ta được:
+\[
+P(X = 4) = 3{,}375 \times 0{,}049787 \approx 0{,}1680 = 16{,}80\%.
+\]
+
+\dapso{$P(X = 4) = \dfrac{27}{8}e^{-3} \approx 0{,}1680 = 16{,}80\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Một công ty cung cấp dịch vụ internet có trung bình 20 khách hàng đăng kí tài khoản mới mỗi ngày. Biết rằng số tài khoản mới đăng kí mỗi ngày có phân phối Poisson.
+\begin{enumerate}[label=\alph*)]
+    \item Tính xác suất có ít nhất 3 tài khoản mới đăng kí trong ngày mai.
+    \item Tính xác suất có ít nhất 6 tài khoản mới đăng kí trong 2 ngày tới.
+\end{enumerate}
+\end{cau}
+
+\giai
+\begin{enumerate}[label=\alph*)]
+    \item Gọi $X$ là số tài khoản mới đăng kí trong ngày mai (khoảng thời gian 1 ngày). Theo đề bài, trung bình có 20 khách hàng mới mỗi ngày nên:
+    \[
+    X \sim P(\lambda_1), \quad \text{với } \lambda_1 = 20.
+    \]
+    Xác suất có ít nhất 3 tài khoản mới đăng kí là:
+    \[
+    P(X \ge 3) = 1 - P(X < 3) = 1 - [P(X = 0) + P(X = 1) + P(X = 2)].
+    \]
+    Áp dụng công thức phân phối Poisson $P(X = k) = \dfrac{20^k e^{-20}}{k!}$:
+    \begin{align*}
+    P(X = 0) &= \frac{20^0 e^{-20}}{0!} = e^{-20}, \\
+    P(X = 1) &= \frac{20^1 e^{-20}}{1!} = 20 e^{-20}, \\
+    P(X = 2) &= \frac{20^2 e^{-20}}{2!} = 200 e^{-20}.
+    \end{align*}
+    Do đó:
+    \[
+    P(X < 3) = (1 + 20 + 200) e^{-20} = 221 e^{-20}.
+    \]
+    Vì $e^{-20} \approx 2{,}06115 \times 10^{-9}$ nên:
+    \[
+    P(X < 3) = 221 \times 2{,}06115 \times 10^{-9} \approx 4{,}555 \times 10^{-7}.
+    \]
+    Vậy xác suất cần tìm là:
+    \[
+    P(X \ge 3) = 1 - 221 e^{-20} \approx 1 - 4{,}555 \times 10^{-7} \approx 0{,}9999995 \approx 1 = 100\%.
+    \]
+
+    \item Xét khoảng thời gian 2 ngày tới. Gọi $Y$ là số tài khoản mới đăng kí trong 2 ngày tới. Vì mỗi ngày trung bình có 20 tài khoản mới nên trong 2 ngày số tài khoản mới trung bình là:
+    \[
+    \lambda_2 = 20 \times 2 = 40.
+    \]
+    Do đó $Y \sim P(40)$. Xác suất có ít nhất 6 tài khoản mới đăng kí là:
+    \[
+    P(Y \ge 6) = 1 - P(Y < 6) = 1 - \sum_{k=0}^5 \frac{40^k e^{-40}}{k!}.
+    \]
+    Ta có:
+    \[
+    \sum_{k=0}^5 \frac{40^k}{k!} = 1 + 40 + \frac{40^2}{2} + \frac{40^3}{6} + \frac{40^4}{24} + \frac{40^5}{120} \approx 971507{,}67.
+    \]
+    Vì $e^{-40} \approx 4{,}24835 \times 10^{-18}$ nên:
+    \[
+    P(Y < 6) \approx 971508{,}67 \times 4{,}24835 \times 10^{-18} \approx 4{,}127 \times 10^{-12} \approx 0.
+    \]
+    Vậy:
+    \[
+    P(Y \ge 6) = 1 - P(Y < 6) \approx 1 - 4{,}127 \times 10^{-12} \approx 1 = 100\%.
+    \]
+\end{enumerate}
+
+\dapso{a) $P(X \ge 3) = 1 - 221e^{-20} \approx 0{,}9999995 \approx 100\%$; \quad b) $P(Y \ge 6) \approx 1 = 100\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Nếu chiều cao $X$ của sinh viên nam có phân phối chuẩn với trung bình $166\text{ cm}$, độ lệch chuẩn $4\text{ cm}$, thì có bao nhiêu $\%$ sinh viên nam có chiều cao:
+\begin{enumerate}[label=(\arabic*)]
+    \item Từ $162\text{ cm}$ đến $170\text{ cm}$;
+    \item Từ $154\text{ cm}$ đến $178\text{ cm}$;
+    \item Trên $180\text{ cm}$;
+    \item Dưới $160\text{ cm}$.
+\end{enumerate}
+\end{cau}
+
+\giai
+Theo đề bài, chiều cao $X$ của sinh viên nam có phân phối chuẩn với $\mu = 166\text{ cm}$ và $\sigma = 4\text{ cm}$, tức là $X \sim N(166; 4^2)$.
+
+Chuẩn hóa biến ngẫu nhiên $T = \dfrac{X - 166}{4} \sim N(0; 1)$. Tra cứu giá trị hàm Laplace $\varphi(z)$ theo Bảng A4.
+
+\begin{enumerate}[label=(\arabic*)]
+    \item Xác suất sinh viên nam có chiều cao từ $162\text{ cm}$ đến $170\text{ cm}$:
+    \[
+    P(162 \le X \le 170) = \varphi\left(\frac{170 - 166}{4}\right) - \varphi\left(\frac{162 - 166}{4}\right) = \varphi(1) - \varphi(-1).
+    \]
+    Vì $\varphi(-1) = 1 - \varphi(1)$, nên:
+    \[
+    P(162 \le X \le 170) = 2\varphi(1) - 1.
+    \]
+    Tra Bảng A4: $\varphi(1{,}00) = 0{,}8413$. Do đó:
+    \[
+    P(162 \le X \le 170) = 2(0{,}8413) - 1 = 0{,}6826 = 68{,}26\%.
+    \]
+    \textit{(Đây chính là khoảng $[\mu - \sigma; \mu + \sigma]$, phù hợp quy tắc thực nghiệm 1-sigma $\approx 68{,}2\%$).}
+
+    \item Xác suất sinh viên nam có chiều cao từ $154\text{ cm}$ đến $178\text{ cm}$:
+    \[
+    P(154 \le X \le 178) = \varphi\left(\frac{178 - 166}{4}\right) - \varphi\left(\frac{154 - 166}{4}\right) = \varphi(3) - \varphi(-3) = 2\varphi(3) - 1.
+    \]
+    Tra Bảng A4: $\varphi(3{,}00) = 0{,}9987$. Do đó:
+    \[
+    P(154 \le X \le 178) = 2(0{,}9987) - 1 = 0{,}9974 = 99{,}74\%.
+    \]
+    \textit{(Đây chính là khoảng $[\mu - 3\sigma; \mu + 3\sigma]$, phù hợp quy tắc thực nghiệm 3-sigma $\approx 99{,}7\%$).}
+
+    \item Xác suất sinh viên nam có chiều cao trên $180\text{ cm}$:
+    \[
+    P(X > 180) = 1 - \varphi\left(\frac{180 - 166}{4}\right) = 1 - \varphi\left(\frac{14}{4}\right) = 1 - \varphi(3{,}5).
+    \]
+    Tra Bảng A4: $\varphi(3{,}50) = 0{,}9998$. Do đó:
+    \[
+    P(X > 180) = 1 - 0{,}9998 = 0{,}0002 = 0{,}02\%.
+    \]
+
+    \item Xác suất sinh viên nam có chiều cao dưới $160\text{ cm}$:
+    \[
+    P(X < 160) = \varphi\left(\frac{160 - 166}{4}\right) = \varphi\left(-\frac{6}{4}\right) = \varphi(-1{,}5) = 1 - \varphi(1{,}5).
+    \]
+    Tra Bảng A4: $\varphi(1{,}50) = 0{,}9332$. Do đó:
+    \[
+    P(X < 160) = 1 - 0{,}9332 = 0{,}0668 = 6{,}68\%.
+    \]
+\end{enumerate}
+
+\dapso{(1) $68{,}26\%$; \quad (2) $99{,}74\%$; \quad (3) $0{,}02\%$; \quad (4) $6{,}68\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Giả sử đường kính trong của các vòng đệm cao su do một máy sản xuất có phân phối chuẩn, với đường kính trong trung bình là $1{,}27\text{ cm}$ và độ lệch chuẩn là $0{,}01\text{ cm}$. Đường kính trong của các vòng đệm này được phép có dung sai từ $1{,}25\text{ cm}$ đến $1{,}29\text{ cm}$, ngược lại thì các vòng đệm được xem bị hỏng. Hãy xác định tỷ lệ phần trăm các vòng đệm do máy này sản xuất bị hỏng.
+\end{cau}
+
+\giai
+Gọi $X$ (cm) là đường kính trong của vòng đệm cao su. Theo giả thiết, $X \sim N(\mu; \sigma^2)$ với:
+\[
+\mu = 1{,}27\text{ cm}, \qquad \sigma = 0{,}01\text{ cm}.
+\]
+Vòng đệm đạt tiêu chuẩn (không bị hỏng) khi đường kính nằm trong khoảng dung sai $[1{,}25; 1{,}29]$.
+
+Tỷ lệ vòng đệm đạt tiêu chuẩn là:
+\begin{align*}
+P(1{,}25 \le X \le 1{,}29) &= \varphi\left(\frac{1{,}29 - 1{,}27}{0{,}01}\right) - \varphi\left(\frac{1{,}25 - 1{,}27}{0{,}01}\right) \\
+&= \varphi(2) - \varphi(-2) = 2\varphi(2) - 1.
+\end{align*}
+Tra Bảng A4: $\varphi(2{,}00) = 0{,}9772$. Suy ra:
+\[
+P(1{,}25 \le X \le 1{,}29) = 2(0{,}9772) - 1 = 0{,}9544 = 95{,}44\%.
+\]
+Vòng đệm bị hỏng khi đường kính không nằm trong khoảng dung sai trên. Do đó, tỷ lệ phần trăm các vòng đệm bị hỏng là:
+\[
+P(\text{bị hỏng}) = 1 - P(1{,}25 \le X \le 1{,}29) = 1 - 0{,}9544 = 0{,}0456 = 4{,}56\%.
+\]
+
+\dapso{Tỷ lệ vòng đệm bị hỏng là $4{,}56\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Cho BNN $X$ có phân phối chuẩn với $EX = 10$ và $P(10 < X < 20) = 0{,}3$. Tính $P(0 < X \le 15)$?
+\end{cau}
+
+\giai
+Vì $X$ có phân phối chuẩn với kỳ vọng $EX = \mu = 10$, ta đặt phương sai của $X$ là $\sigma^2$ ($\sigma > 0$), tức là $X \sim N(10; \sigma^2)$.
+
+Theo công thức tính xác suất của phân phối chuẩn qua hàm Laplace $\varphi(z)$:
+\[
+P(10 < X < 20) = \varphi\left(\frac{20 - 10}{\sigma}\right) - \varphi\left(\frac{10 - 10}{\sigma}\right) = \varphi\left(\frac{10}{\sigma}\right) - \varphi(0).
+\]
+Vì $\varphi(0) = 0{,}5$, nên:
+\[
+\varphi\left(\frac{10}{\sigma}\right) - 0{,}5 = 0{,}3 \iff \varphi\left(\frac{10}{\sigma}\right) = 0{,}8.
+\]
+Đặt $z_0 = \dfrac{10}{\sigma} > 0$. Khi đó $\varphi(z_0) = 0{,}8$.
+
+Tra Bảng A4 để tìm $z_0$:
+\begin{itemize}
+    \item Tại $z = 0{,}84$, ta có $\varphi(0{,}84) = 0{,}7995 \approx 0{,}8000$.
+    \item Do đó, ta có $z_0 = \dfrac{10}{\sigma} \approx 0{,}84$ (hoặc nội suy chính xác $z_0 \approx 0{,}8416$).
+\end{itemize}
+
+Bây giờ ta tính xác suất $P(0 < X \le 15)$:
+\[
+P(0 < X \le 15) = \varphi\left(\frac{15 - 10}{\sigma}\right) - \varphi\left(\frac{0 - 10}{\sigma}\right) = \varphi\left(\frac{5}{\sigma}\right) - \varphi\left(-\frac{10}{\sigma}\right).
+\]
+Nhận thấy rằng:
+\[
+\frac{5}{\sigma} = \frac{1}{2} \cdot \frac{10}{\sigma} = \frac{z_0}{2}, \qquad -\frac{10}{\sigma} = -z_0.
+\]
+Theo tính chất đối xứng của hàm Laplace:
+\[
+\varphi(-z_0) = 1 - \varphi(z_0) = 1 - 0{,}8 = 0{,}2.
+\]
+Với $z_0 \approx 0{,}84 \implies \dfrac{z_0}{2} \approx 0{,}42$. Tra Bảng A4, ta được:
+\[
+\varphi(0{,}42) = 0{,}6628.
+\]
+Do đó:
+\[
+P(0 < X \le 15) = \varphi\left(\frac{z_0}{2}\right) - \varphi(-z_0) \approx 0{,}6628 - 0{,}2 = 0{,}4628 = 46{,}28\%.
+\]
+\textit{(Nếu dùng giá trị nội suy tuyến tính $z_0 \approx 0{,}8416 \implies \frac{z_0}{2} \approx 0{,}4208 \implies \varphi(0{,}4208) \approx 0{,}6631$, kết quả là $P \approx 0{,}4631 = 46{,}31\%$).}
+
+\dapso{$P(0 < X \le 15) \approx 0{,}4628 = 46{,}28\%$.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Giả sử thời gian khách phải chờ để được phục vụ tại một cửa hàng là BNN $X$ (phút), $X \in N(4{,}5; 1{,}21)$.
+\begin{enumerate}[label=\arabic*)]
+    \item Tính xác suất khách phải chờ từ $3{,}5$ phút đến 5 phút.
+    \item Tính thời gian tối thiểu $t$ nếu xác suất khách phải chờ vượt quá $t$ là không quá $5\%$.
+\end{enumerate}
+\end{cau}
+
+\giai
+Biến ngẫu nhiên $X \sim N(4{,}5; 1{,}21)$ có trung bình $\mu = 4{,}5$ và phương sai $\sigma^2 = 1{,}21$, suy ra độ lệch chuẩn:
+\[
+\sigma = \sqrt{1{,}21} = 1{,}1\text{ (phút)}.
+\]
+
+\begin{enumerate}[label=\arabic*)]
+    \item Xác suất khách phải chờ từ $3{,}5$ phút đến 5 phút là:
+    \[
+    P(3{,}5 \le X \le 5) = \varphi\left(\frac{5 - 4{,}5}{1{,}1}\right) - \varphi\left(\frac{3{,}5 - 4{,}5}{1{,}1}\right) = \varphi\left(\frac{0{,}5}{1{,}1}\right) - \varphi\left(\frac{-1}{1{,}1}\right).
+    \]
+    Ta có:
+    \[
+    \frac{0{,}5}{1{,}1} \approx 0{,}4545 \approx 0{,}45, \qquad \frac{-1}{1{,}1} \approx -0{,}9091 \approx -0{,}91.
+    \]
+    Tra Bảng A4:
+    \begin{itemize}
+        \item $\varphi(0{,}45) = 0{,}6736$.
+        \item $\varphi(-0{,}91) = 1 - \varphi(0{,}91) = 1 - 0{,}8186 = 0{,}1814$.
+    \end{itemize}
+    Do đó:
+    \[
+    P(3{,}5 \le X \le 5) \approx 0{,}6736 - 0{,}1814 = 0{,}4922 = 49{,}22\%.
+    \]
+    \textit{(Nếu tính chính xác với các giá trị chưa làm tròn: $\varphi(0{,}4545) - \varphi(-0{,}9091) \approx 0{,}6753 - 0{,}1817 = 0{,}4936 = 49{,}36\%$).}
+
+    \item Theo đề bài, xác suất khách phải chờ vượt quá $t$ không quá $5\%$:
+    \[
+    P(X > t) \le 5\% = 0{,}05.
+    \]
+    Mặt khác:
+    \[
+    P(X > t) = 1 - \varphi\left(\frac{t - 4{,}5}{1{,}1}\right).
+    \]
+    Do đó:
+    \[
+    1 - \varphi\left(\frac{t - 4{,}5}{1{,}1}\right) \le 0{,}05 \iff \varphi\left(\frac{t - 4{,}5}{1{,}1}\right) \ge 0{,}95.
+    \]
+    Đặt $z = \dfrac{t - 4{,}5}{1{,}1}$. Ta tìm $z$ sao cho $\varphi(z) \ge 0{,}95$.
+
+    Tra Bảng A4:
+    \begin{itemize}
+        \item $\varphi(1{,}64) = 0{,}9495$,
+        \item $\varphi(1{,}65) = 0{,}9505$.
+    \end{itemize}
+    Nội suy tuyến tính ta được giá trị chuẩn $z_{0{,}95} \approx 1{,}645$.
+
+    Vì $\varphi$ là hàm đồng biến nên:
+    \[
+    \frac{t - 4{,}5}{1{,}1} \ge 1{,}645 \iff t \ge 4{,}5 + 1{,}1 \times 1{,}645 = 6{,}3095\text{ (phút)}.
+    \]
+    \textit{(Nếu lấy $z = 1{,}65$ thì $t \ge 4{,}5 + 1{,}1 \times 1{,}65 = 6{,}315\text{ phút}$).}
+
+    Vậy thời gian tối thiểu cần tìm là $t_{\min} \approx 6{,}31\text{ phút}$ (tương đương 6 phút 19 giây).
+\end{enumerate}
+
+\dapso{1) $P(3{,}5 \le X \le 5) \approx 0{,}4922 = 49{,}22\%$ (hoặc $49{,}36\%$); \quad 2) $t_{\min} \approx 6{,}31$ phút.}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Tuổi thọ $X$ (năm) của một loại bóng đèn $A$ là BNN tuân theo luật phân phối chuẩn $N(4; 2{,}25)$.
+\begin{enumerate}[label=\alph*.]
+    \item Tính tỉ lệ bóng đèn $A$ có tuổi thọ từ $4{,}5$ năm trở lên.
+    \item Quan sát ngẫu nhiên 1 bóng đèn loại $A$ thấy nó có tuổi thọ trên tuổi thọ trung bình. Hãy tính xác suất bóng đèn đó có tuổi thọ không quá 5 năm.
+    \item Cần mua bao nhiêu bóng đèn loại $A$ để xác suất mua được ít nhất 1 bóng có tuổi thọ từ 6 năm trở lên không nhỏ hơn $90\%$?
+\end{enumerate}
+\end{cau}
+
+\giai
+Tuổi thọ bóng đèn $X \sim N(\mu; \sigma^2) = N(4; 2{,}25)$, có kỳ vọng $\mu = 4$ năm và phương sai $\sigma^2 = 2{,}25$, suy ra độ lệch chuẩn:
+\[
+\sigma = \sqrt{2{,}25} = 1{,}5\text{ (năm)}.
+\]
+
+\begin{enumerate}[label=\alph*.]
+    \item Tỉ lệ bóng đèn $A$ có tuổi thọ từ $4{,}5$ năm trở lên là $P(X \ge 4{,}5)$:
+    \[
+    P(X \ge 4{,}5) = 1 - \varphi\left(\frac{4{,}5 - 4}{1{,}5}\right) = 1 - \varphi\left(\frac{0{,}5}{1{,}5}\right) = 1 - \varphi\left(\frac{1}{3}\right).
+    \]
+    Lấy $\dfrac{1}{3} \approx 0{,}33$, tra Bảng A4: $\varphi(0{,}33) = 0{,}6293$. Suy ra:
+    \[
+    P(X \ge 4{,}5) \approx 1 - 0{,}6293 = 0{,}3707 = 37{,}07\%.
+    \]
+    \textit{(Nếu dùng giá trị chính xác $\varphi(1/3) \approx 0{,}6306$, ta được $P \approx 0{,}3694 = 36{,}94\%$).}
+
+    \item Tuổi thọ trung bình là $\mu = 4$ năm. Bóng đèn có tuổi thọ trên mức trung bình là biến cố $\{X > 4\}$.
+
+    Biến cố bóng đèn có tuổi thọ không quá 5 năm khi biết nó có tuổi thọ trên trung bình là xác suất có điều kiện:
+    \[
+    P(X \le 5 \mid X > 4) = \frac{P(4 < X \le 5)}{P(X > 4)}.
+    \]
+    Ta có:
+    \begin{align*}
+    P(X > 4) &= 1 - \varphi\left(\frac{4 - 4}{1{,}5}\right) = 1 - \varphi(0) = 1 - 0{,}5 = 0{,}5, \\
+    P(4 < X \le 5) &= \varphi\left(\frac{5 - 4}{1{,}5}\right) - \varphi\left(\frac{4 - 4}{1{,}5}\right) = \varphi\left(\frac{1}{1{,}5}\right) - \varphi(0) = \varphi\left(\frac{2}{3}\right) - 0{,}5.
+    \end{align*}
+    Lấy $\dfrac{2}{3} \approx 0{,}67$, tra Bảng A4: $\varphi(0{,}67) = 0{,}7486$. Do đó:
+    \[
+    P(4 < X \le 5) \approx 0{,}7486 - 0{,}5 = 0{,}2486.
+    \]
+    Vậy xác suất có điều kiện cần tìm là:
+    \[
+    P(X \le 5 \mid X > 4) = \frac{0{,}2486}{0{,}5} = 0{,}4972 = 49{,}72\%.
+    \]
+    \textit{(Nếu tính với $\varphi(2/3) \approx 0{,}7475$, ta được $P \approx 0{,}4950 = 49{,}50\%$).}
+
+    \item Xác suất để một bóng đèn có tuổi thọ từ 6 năm trở lên là:
+    \[
+    p = P(X \ge 6) = 1 - \varphi\left(\frac{6 - 4}{1{,}5}\right) = 1 - \varphi\left(\frac{2}{1{,}5}\right) = 1 - \varphi\left(\frac{4}{3}\right).
+    \]
+    Lấy $\dfrac{4}{3} \approx 1{,}33$, tra Bảng A4: $\varphi(1{,}33) = 0{,}9082$. Suy ra:
+    \[
+    p \approx 1 - 0{,}9082 = 0{,}0918.
+    \]
+    Giả sử mua ngẫu nhiên $n$ bóng đèn độc lập. Gọi $Y$ là số bóng có tuổi thọ từ 6 năm trở lên trong $n$ bóng, khi đó $Y \sim B(n, p)$.
+
+    Xác suất mua được ít nhất 1 bóng có tuổi thọ từ 6 năm trở lên là:
+    \[
+    P(Y \ge 1) = 1 - P(Y = 0) = 1 - (1 - p)^n.
+    \]
+    Theo yêu cầu đề bài:
+    \[
+    1 - (1 - p)^n \ge 90\% = 0{,}90 \iff (1 - p)^n \le 0{,}10.
+    \]
+    Lấy logarit tự nhiên hai vế (chú ý $\ln(1 - p) < 0$ nên đổi chiều bất đẳng thức):
+    \[
+    n \ln(1 - p) \le \ln(0{,}10) \iff n \ge \frac{\ln(0{,}10)}{\ln(1 - p)}.
+    \]
+    Thay $1 - p = 0{,}9082$:
+    \[
+    n \ge \frac{\ln(0{,}10)}{\ln(0{,}9082)} = \frac{-2{,}302585}{-0{,}096291} \approx 23{,}91.
+    \]
+    Vì số bóng đèn $n$ phải là số nguyên dương, nên cần mua ít nhất $n = 24$ bóng đèn.
+    
+    \textit{(Ghi chú: Nếu dùng giá trị chính xác không làm tròn $p = 1 - \varphi(4/3) \approx 0{,}09121 \implies 1 - p \approx 0{,}90879$, ta có $n \ge \dfrac{\ln 0{,}10}{\ln 0{,}90879} \approx 24{,}07 \implies n \ge 25$ bóng).}
+\end{enumerate}
+
+\dapso{a) $37{,}07\%$ (hoặc $36{,}94\%$); \quad b) $0{,}4972 = 49{,}72\%$ (hoặc $49{,}50\%$); \quad c) Cần mua ít nhất 24 bóng đèn (hoặc 25 bóng).}
+
+\vspace{1.5em}
+%==================================================================
+\begin{cau}
+Đường kính của một loại trục máy do máy tiện làm ra là một đại lượng ngẫu nhiên có phân phối chuẩn, với giá trị trung bình là $25\text{ mm}$, và phương sai là $44{,}1\text{ mm}^2$. Trục máy được xem là đạt tiêu chuẩn kỹ thuật nếu đường kính nằm trong khoảng từ $23{,}44\text{ mm}$ đến $26{,}56\text{ mm}$.
+\begin{enumerate}[label=\arabic*)]
+    \item Tìm tỉ lệ trục máy đạt tiêu chuẩn kỹ thuật.
+    \item Phải sản xuất ít nhất bao nhiêu trục để khả năng có ít nhất 1 trục đạt tiêu chuẩn kỹ thuật không dưới $99{,}73\%$?
+    \item Tính tỉ lệ trục máy đạt tiêu chuẩn kỹ thuật trong số các trục máy có đường kính trên $25\text{ mm}$.
+\end{enumerate}
+\end{cau}
+
+\giai
+Gọi $X$ (mm) là đường kính của trục máy.
+
+Theo đề bài: $X \sim N(\mu; \sigma^2)$ với giá trị trung bình $\mu = 25\text{ mm}$, phương sai $\sigma^2 = 44{,}1\text{ mm}^2$.
+
+Suy ra độ lệch chuẩn:
+\[
+\sigma = \sqrt{44{,}1} \approx 6{,}6408\text{ mm}.
+\]
+Trục máy đạt tiêu chuẩn kỹ thuật khi đường kính $X \in [23{,}44; 26{,}56]$.
+
+\begin{enumerate}[label=\arabic*)]
+    \item Tỉ lệ trục máy đạt tiêu chuẩn kỹ thuật là:
+    \begin{align*}
+    p = P(23{,}44 \le X \le 26{,}56) &= \varphi\left(\frac{26{,}56 - 25}{\sigma}\right) - \varphi\left(\frac{23{,}44 - 25}{\sigma}\right) \\
+    &= \varphi\left(\frac{1{,}56}{6{,}6408}\right) - \varphi\left(-\frac{1{,}56}{6{,}6408}\right) \\
+    &= 2\varphi\left(\frac{1{,}56}{6{,}6408}\right) - 1.
+    \end{align*}
+    Ta có: $\dfrac{1{,}56}{6{,}6408} \approx 0{,}2349 \approx 0{,}23$.
+    
+    Tra Bảng A4: $\varphi(0{,}23) = 0{,}5910$. Do đó:
+    \[
+    p \approx 2(0{,}5910) - 1 = 0{,}1820 = 18{,}20\%.
+    \]
+    \textit{(Nếu tính với giá trị chính xác $z \approx 0{,}2349$, ta có $\varphi(0{,}2349) \approx 0{,}5928 \implies p \approx 0{,}1857 = 18{,}57\%$).}
+
+    \item Giả sử sản xuất $n$ trục máy độc lập. Gọi $Y$ là số trục đạt tiêu chuẩn trong $n$ trục được sản xuất, khi đó $Y \sim B(n, p)$.
+
+    Khả năng có ít nhất 1 trục đạt tiêu chuẩn kỹ thuật là:
+    \[
+    P(Y \ge 1) = 1 - P(Y = 0) = 1 - (1 - p)^n.
+    \]
+    Theo yêu cầu đề bài:
+    \[
+    1 - (1 - p)^n \ge 99{,}73\% = 0{,}9973 \iff (1 - p)^n \le 1 - 0{,}9973 = 0{,}0027.
+    \]
+    Lấy logarit tự nhiên hai vế (với $\ln(1 - p) < 0$):
+    \[
+    n \ge \frac{\ln(0{,}0027)}{\ln(1 - p)}.
+    \]
+    Với $p = 0{,}1820 \implies 1 - p = 0{,}8180$:
+    \[
+    n \ge \frac{\ln(0{,}0027)}{\ln(0{,}8180)} = \frac{-5{,}91450}{-0{,}20089} \approx 29{,}44.
+    \]
+    Vì $n \in \mathbb{N}^*$, nên cần sản xuất ít nhất $n = 30$ trục máy.
+    
+    \textit{(Nếu dùng giá trị chính xác $p \approx 0{,}1857 \implies 1 - p = 0{,}8143$, ta có $n \ge \dfrac{-5{,}91450}{\ln(0{,}8143)} \approx 28{,}81 \implies n \ge 29$ trục máy).}
+
+    \item Tính tỉ lệ trục máy đạt tiêu chuẩn kỹ thuật trong số các trục có đường kính trên $25\text{ mm}$:
+
+    Đây là xác suất có điều kiện:
+    \begin{align*}
+    P(23{,}44 \le X \le 26{,}56 \mid X > 25) &= \frac{P((23{,}44 \le X \le 26{,}56) \cap (X > 25))}{P(X > 25)} \\
+    &= \frac{P(25 < X \le 26{,}56)}{P(X > 25)}.
+    \end{align*}
+    Ta có:
+    \begin{itemize}
+        \item Vì trung bình $\mu = 25$ nên $P(X > 25) = 1 - \varphi(0) = 0{,}5$.
+        \item Do tính đối xứng của hàm mật độ phân phối chuẩn qua $\mu = 25$:
+        \[
+        P(25 < X \le 26{,}56) = \frac{1}{2} P(23{,}44 \le X \le 26{,}56) = \frac{p}{2}.
+        \]
+    \end{itemize}
+    Do đó:
+    \[
+    P(23{,}44 \le X \le 26{,}56 \mid X > 25) = \frac{p / 2}{0{,}5} = p = 18{,}20\% \quad (\text{hoặc } 18{,}57\%).
+    \]
+\end{enumerate}
+
+\begin{chuy}
+Nếu phương sai trong đề bài gốc là $\sigma^2 = 4{,}41\text{ mm}^2$ (thay vì $44{,}1\text{ mm}^2$), khi đó độ lệch chuẩn là $\sigma = \sqrt{4{,}41} = 2{,}1\text{ mm}$.
+Khi đó $z = \dfrac{1{,}56}{2{,}1} \approx 0{,}74$, tra bảng $\varphi(0{,}74) = 0{,}7704$:
+\begin{enumerate}[label=\arabic*)]
+    \item Tỉ lệ trục đạt tiêu chuẩn: $p = 2\varphi(0{,}74) - 1 = 2(0{,}7704) - 1 = 0{,}5408 = 54{,}08\%$.
+    \item Số trục tối thiểu: $n \ge \dfrac{\ln(0{,}0027)}{\ln(1 - 0{,}5408)} \approx 7{,}6 \implies n = 8$ trục.
+    \item Tỉ lệ trong số các trục có đường kính trên $25\text{ mm}$ vẫn bằng $p = 54{,}08\%$.
+\end{enumerate}
+\end{chuy}
+
+\dapso{1) Tỉ lệ đạt tiêu chuẩn: $18{,}20\%$ (hoặc $18{,}57\%$); \quad 2) Cần ít nhất 30 trục (hoặc 29 trục); \quad 3) $18{,}20\%$ (hoặc $18{,}57\%$).}
+
+\end{document}
